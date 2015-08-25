@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <properties>
+        <property name="jdbc.driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="jdbc.url" value="jdbc:mysql://192.168.11.157:3306/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true" />
+        <property name="jdbc.username" value="root"/>
+        <property name="jdbc.password" value="asdf1234"/>
+    </properties>
+
+    <!-- 别名 -->
+    <typeAliases>
+        <typeAlias type="com.cmcc.syw.model.User" alias="User" />
+        <typeAlias type="com.cmcc.syw.model.Article" alias="Article" />
+        <typeAlias type="com.cmcc.syw.model.Author" alias="Author" />
+    </typeAliases>
+    
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC" />
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driverClassName}"/>
+                <property name="url" value="${jdbc.url}" />
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="mappers/UserMapper.xml"/>
+        <mapper resource="mappers/ArticleMapper.xml"/>
+    </mappers>
+</configuration>

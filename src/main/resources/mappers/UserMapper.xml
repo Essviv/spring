@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cmcc.syw.dao.UserMapper">
+    <resultMap id="BaseResultMap" type="com.cmcc.syw.model.User">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="age" property="age" jdbcType="INTEGER"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        name,
+        age,
+        address
+    </sql>
+
+    <select id="get" resultMap="BaseResultMap">
+        SELECT
+          *
+        FROM
+          user
+        WHERE
+          id = #{id, jdbcType = BIGINT}
+    </select>
+
+    <!-- 获取所有的用户信息 -->
+    <select id="list" resultMap="BaseResultMap">
+        SELECT
+          *
+        FROM
+          user
+    </select>
+
+    <delete id="delete">
+        DELETE FROM user
+        WHERE
+          id = #{id, jdbcType=BIGINT}
+    </delete>
+
+    <update id="update">
+        UPDATE
+          user
+        SET
+          address = #{address, jdbcType=VARCHAR}
+        WHERE
+          id=#{id, jdbcType=BIGINT}
+    </update>
+
+    <insert id="insert" parameterType="User">
+        INSERT INTO
+          user(name, age, address)
+        VALUES(
+          #{name, jdbcType=VARCHAR},
+          #{age, jdbcType=BIGINT},
+          #{address, jdbcType=VARCHAR})
+    </insert>
+</mapper>

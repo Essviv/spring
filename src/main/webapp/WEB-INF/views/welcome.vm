@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+    #set($contextPath = $rc.contextPath)
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>学习JS</title>
+
+    <script src="$contextPath/assets/js/main.js" charset="utf-8"></script>
+
+
+    <script>
+        function displayDate() {
+            var elem = document.getElementById("demo");
+
+            elem.innerHTML = Date();
+            elem.style.color = '#ccc';
+        }
+
+        function customClear() {
+            document.write("哈哈，我是邪恶的输出流，不要在函数中使用我...")
+        }
+
+        function onLoad() {
+//            alert("这时候文档才加载完毕...")
+            testStr();
+        }
+
+        function showCounter() {
+            document.getElementById("counter-btn").innerText = test2.test();
+        }
+
+        var testClosure = (function () {
+            var counter = 0;
+            return function () {
+                return counter++;
+            };
+        })();
+
+        var test2 = testClosure2();
+    </script>
+</head>
+
+<body onload="onLoad();">
+<h1>这是我的第一个JS程序</h1>
+
+<p id="demo">这是一个段落, 我叫demo</p>
+
+<input type="button" onclick="displayDate();" value="显示日期"/>
+
+<script>
+    document.write("<p>这是由文件流输出的内容。</p>")
+</script>
+
+<input type="button" onclick="customClear();" value="我会清空整个文档的内容"/>
+
+<button type="button" onclick="alert('你好厉害！');"><img src="$contextPath/assets/imgs/1.jpg"/></button>
+
+<button type="button" onclick="out();">点我测试！</button>
+
+<p>
+    <button type="button" onclick="testArr();">测试数组</button>
+</p>
+
+<p>
+    <button type="button" onclick="testObj();">测试对象</button>
+</p>
+
+<p>
+    <button type="button" onclick="showCounter();" id="counter-btn">测试闭包</button>
+</p>
+
+<p>
+    <button type="button" onclick="testDOM();" id="dom-btn">测试DOM</button>
+</p>
+
+<p>
+    <button type="button" onclick="testEvent();" id="evt-btn">测试事件</button>
+    <a href="http://www.baidu.com.cn/" onclick="return testA();">测试链接</a>
+</p>
+
+<div>
+    <div id="ajax-div"/>
+    <button type="button" onclick="testAjax();">测试AJAX</button>
+</div>
+
+<script>
+    function testAjax() {
+        var xmlHttpRequest = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Micorsoft.XMLHTTP");
+        var url = "$contextPath/ajax/sunyiwei.html";
+
+        xmlHttpRequest.onreadystatechange = function () {
+            console.log("回调函数被执行了, 当前状态为： " + xmlHttpRequest.readyState);
+            if (xmlHttpRequest.status == 200 && xmlHttpRequest.readyState == 4) {
+                var newNode = document.createTextNode("这个是由后台传过来的数据：" + xmlHttpRequest.responseText);
+                document.getElementById("ajax-div").appendChild(newNode);
+            }
+        };
+
+        xmlHttpRequest.open("GET", url, true);
+        xmlHttpRequest.send();
+    }
+
+    function testA(event) {
+//        event.preventDefault();
+        return false;
+    }
+
+    function testEvent() {
+
+    }
+
+    function testDOM() {
+        var dom = document.getElementById("demo");
+        dom.style.color = '#ccc';
+    }
+</script>
+
+<script>
+    function Person(name) {
+        console.log(this instanceof  Person);
+        this.name = name;
+    }
+
+    Person.prototype = {
+        getName: function () {
+            return this.name;
+        }
+    }
+
+    Person.prototype.constructor = Person;
+
+    var p = new Person("syw");
+    console.log("================================");
+    console.log(Person.prototype.constructor === Person);
+    console.log(Person.prototype.constructor === Object);
+    console.log(p.constructor === Person.prototype.constructor);
+
+    console.log(p.__proto__ === Person.prototype);
+    console.log(p.__proto__ === p.constructor.prototype);
+    console.log(Person.prototype.constructor === Person);
+</script>
+
+</body>
+</html>
