@@ -1,0 +1,167 @@
+<h2 class="toHide">这是一个标题</h2>
+<p id="firstP" class="toHide">这是一个段落。</p>
+<p id="secondP">这是另一个段落。</p>
+
+<div class="toHide">
+    <a href="http://www.baidu.com.cn/" id="a-btn">链接</a>
+</div>
+
+<button id="btn-hide">隐藏</button>
+<button id="btn-show">显示</button>
+<button id="btn-toggle">切换</button>
+
+<button id="fade-in">淡入</button>
+<button id="fade-out">淡出</button>
+<button id="fade-toggle">渐变切换</button>
+<button id="fade-to">渐变至</button>
+
+<button id="slide-down">向下滑动</button>
+<button id="slide-up">向上滑动</button>
+<button id="slide-toggle">动起来！</button>
+
+<button id="animate">动画</button>
+<button id="animate-stop">停止动画</button>
+
+<button id="test">测试</button>
+
+<ul>
+    <li>红</li>
+    <li class="toHide">黄</li>
+    <li>绿</li>
+    <li>蓝</li>
+    <li>白</li>
+</ul>
+
+<ul>
+    <li>红</li>
+    <li class="toHide">黄</li>
+    <li>绿</li>
+    <li>蓝</li>
+    <li>白</li>
+</ul>
+
+<ul>
+    <li>红</li>
+    <li class="toHide">黄</li>
+    <li>绿</li>
+    <li>蓝</li>
+    <li>白</li>
+</ul>
+
+<ul>
+    <li>红</li>
+    <li class="toHide">黄</li>
+    <li>绿</li>
+    <li>蓝</li>
+    <li>白</li>
+</ul>
+
+<div id="test-div">
+    <ul>
+        <div>
+            <li>红</li>
+            <li class="toHide">黄</li>
+            <li>绿</li>
+            <li class="toHide">蓝</li>
+            <li>白</li>
+        </div>
+    </ul>
+</div>
+
+<form action="http://www.baidu.com/" method="get" id="test-form">
+    <button type="submit" id="submit-btn">提交</button>
+</form>
+
+<p id="dbl-p">
+    双击我试试~
+</p>
+
+<button type="button" id="btn-test" value="我是value" class="testA testB testC"><b>我是在标签内</b>划过我试试！</button>
+
+<script>
+    $(function () {
+        $("#submit-btn").click(function () {
+            $("#test-form").attr("action", function () {
+                return "http://www.google.com/";
+            });
+//            return false;
+        });
+
+        $("#a-btn").click(function () {
+            $(this).attr("href", "http://www.google.com/");
+        });
+
+        $("#btn-test").click(function () {
+            console.log($(this).attr("class"));
+        });
+
+        $("#btn-toggle").click(function () {
+            $("ul+ul").toggle("slow", function () {
+                console.log("少年，已经全部办好了！");
+            });
+        });
+
+//        $("#btn-test").hover(
+//                function () {
+//                    $(this).text("你划过我了！");
+//                },
+//                function () {
+//                    $(this).text("再划过我试试！");
+//                });
+
+        $("#dbl-p").dblclick(function () {
+            $(this).hide();
+        });
+
+        $("#btn-hide").click(function () {
+            $("ul+ul").hide(1000, function () {
+                console.log("少年，已经全部隐藏了！");
+            });
+        });
+
+        $("#btn-show").click(function () {
+            $("ul+ul").show(2000, function () {
+                console.log("老大，已经全部显示出来了！");
+            });
+        });
+
+        $("#fade-in").click(function () {
+            $("ul+ul").fadeIn(2000);
+        });
+
+        $("#fade-out").click(function () {
+            $("ul+ul").fadeOut(2000);
+        });
+
+        $("#fade-toggle").click(function () {
+            $("ul+ul").fadeToggle(2000);
+        });
+
+        $("#fade-to").click(function () {
+            $("ul+ul").fadeTo(2000, 0.5);
+        });
+
+        $("#slide-down").click(function () {
+            $("ul+ul").slideDown(2000);
+        });
+
+        $("#slide-up").click(function () {
+            $("ul+ul").slideUp(2000);
+        });
+
+        $("#slide-toggle").click(function () {
+            $("ul+ul").slideToggle(2000).slideToggle(2000).slideToggle(2000).slideToggle(2000).slideToggle(2000);
+        });
+
+        $("#animate").click(function () {
+            $("ul+ul").animate({
+                height: '300px',
+                opacity: '0.4'
+            }, 5000);
+        });
+
+        $("#animate-stop").click(function () {
+            $("ul+ul").stop(false, true);
+        });
+    });
+</script>

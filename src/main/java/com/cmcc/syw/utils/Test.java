@@ -1,7 +1,6 @@
 package com.cmcc.syw.utils;
 
 import com.cmcc.syw.dao.ArticleMapper;
-import com.cmcc.syw.dao.UserMapper;
 import com.cmcc.syw.model.Article;
 import com.cmcc.syw.model.User;
 import org.apache.ibatis.io.Resources;
@@ -20,16 +19,16 @@ public class Test {
     private static SqlSessionFactory ssf;
     private static Reader reader;
 
-    static{
+    static {
         try {
             reader = Resources.getResourceAsReader("conf/configuration.xml");
             ssf = new SqlSessionFactoryBuilder().build(reader);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.err.println(e.getMessage());
         }
     }
 
-    public static SqlSessionFactory getFactory(){
+    public static SqlSessionFactory getFactory() {
         return ssf;
     }
 
@@ -47,7 +46,7 @@ public class Test {
         }
     }
 
-    private static List<User> getList(){
+    private static List<User> getList() {
         List<User> users = new ArrayList<User>();
         final int count = 100;
 
