@@ -1,0 +1,34 @@
+#set($contextPath = $rc.contextPath)
+
+<div></div>
+<p></p>
+
+<button type="button" id="load-btn">LOAD</button>
+<button type="button" id="get-btn">GET</button>
+<button type="button" id="post-btn">POST</button>
+<button type="button" id="clear-btn">CLEAR</button>
+
+<script>
+    $(function () {
+        $("#load-btn").click(function () {
+            $("div:first").load("$contextPath/jquery/sunyiwei/male.html", {age: 27});
+        });
+
+        $("#get-btn").click(function () {
+            $.get("$contextPath/jquery/sunyiwei/male.html?age=27", function (respText, statusCode, xhr) {
+                $("p:first").text("RespText: " + respText + "<br>" + "StatusCode: " + statusCode);
+            })
+        });
+
+        $("#post-btn").click(function () {
+            $.post("$contextPath/jquery/sunyiwei/male.html", {age: 27}, function (respText, statusCode) {
+                $("p:first").text("RespText: " + respText + "<br>" + "StatusCode: " + statusCode);
+            })
+        });
+
+        $("#clear-btn").click(function (e) {
+            $("p:first").text("");
+        });
+
+    });
+</script>
