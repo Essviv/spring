@@ -6,9 +6,6 @@ import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.velocity.VelocityView;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,6 +17,7 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/")
+@SessionAttributes("myName")
 public class HelloController {
     @RequestMapping(value = "hi", method = RequestMethod.GET)
     public String printWelcome() {
@@ -122,7 +120,7 @@ public class HelloController {
 //    }
 
     /**
-     * ÑÝÊ¾ModelAttributeºÍRequestMappingÒ»ÆðÊ¹ÓÃ£¬´ËÊ±·µ»ØµÄÖµ´æ´¢ÓÚmodelÖÐ£¬keyÎªmodelAtributeÖÐÉèÖÃµÄÖµ£¬Ê¹ÓÃRequestToViewNameTranslatorÀ´½âÎöÊÓÍ¼
+     * ï¿½ï¿½Ê¾ModelAttributeï¿½ï¿½RequestMappingÒ»ï¿½ï¿½Ê¹ï¿½Ã£ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½Øµï¿½Öµï¿½æ´¢ï¿½ï¿½modelï¿½Ð£ï¿½keyÎªmodelAtributeï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½Öµï¿½ï¿½Ê¹ï¿½ï¿½RequestToViewNameTranslatorï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼
      *
      * @return
      */
@@ -132,13 +130,45 @@ public class HelloController {
 //        return "Michal Jordan";
 //    }
 
-    @RequestMapping("hello")
-    public Model testMAV(@RequestParam String name, @RequestParam int age, @RequestBody String body){
-        Model model = new ExtendedModelMap();
-        model.addAttribute("name", name);
-        System.out.println("RequestBody: " + body);
+    @RequestMapping("ma/{myName}")
+    public String testModelAttribute3(@ModelAttribute("myName") Student student){
+        System.out.println(student.toString());
+        return "hello";
+    }
 
-        return model;
+    @RequestMapping("sa")
+    public String testModelAttribute4(@ModelAttribute("myName") String name){
+        System.out.println(name);
+        return "hello";
+    }
+
+    @RequestMapping("hello")
+    @ModelAttribute("myName")
+    public  String testModelAttribute5(){
+        return "patrick";
+    }
+
+//    @RequestMapping("hello")
+//    public Model testMAV(@RequestParam String name, @RequestParam int age, @RequestBody String body) {
+//        Model model = new ExtendedModelMap();
+//        model.addAttribute("name", name);
+//        System.out.println("RequestBody: " + body);
+//
+//        return model;
+//    }
+
+    @RequestMapping("rb")
+    public String testReqRespBody(ModelMap modelMap, @RequestBody Student student){
+        modelMap.addAttribute("name", student.getName());
+        return "hello";
+    }
+
+    @RequestMapping("json/{name}/{age}")
+    @ResponseBody
+    public Student testJSON(@PathVariable String name, @PathVariable int age) {
+        return new Student(name, age);
     }
 }
+
+
 

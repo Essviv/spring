@@ -1,17 +1,16 @@
 package com.cmcc.syw.dao;
 
 import com.cmcc.syw.model.Author;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface AuthorMapper {
-    int deleteByPrimaryKey(Long id);
+    int batchInsert(@Param("authors") List<Author> authors);
 
     int insert(Author record);
 
-    int insertSelective(Author record);
+    int batchUpdate(@Param("authors") List<Author> authors);
 
-    Author selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(Author record);
-
-    int updateByPrimaryKey(Author record);
+    int update(Author author);
 }
