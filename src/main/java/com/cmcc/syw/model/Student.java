@@ -1,8 +1,11 @@
 package com.cmcc.syw.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by sunyiwei on 2015/8/29.
  */
+@XmlRootElement(name = "student")
 public class Student {
     private String name;
     private int age;

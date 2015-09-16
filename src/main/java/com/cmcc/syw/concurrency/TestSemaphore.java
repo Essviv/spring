@@ -28,10 +28,10 @@ public class TestSemaphore {
                         //sleep
                         Thread.currentThread().sleep(2000);
                         System.out.println(Thread.currentThread().getName() + ": Hi...");
-
-                        semaphore.release();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
+                    }finally {
+                        semaphore.release();
                     }
                 }
             });

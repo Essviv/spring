@@ -6,12 +6,15 @@ import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -167,6 +170,34 @@ public class HelloController {
     @ResponseBody
     public Student testJSON(@PathVariable String name, @PathVariable int age) {
         return new Student(name, age);
+    }
+
+    @RequestMapping("testXmlVR")
+    public String testXmlViewResolver(){
+        return "testXmlViewResolver";
+    }
+
+    @RequestMapping("testRV")
+    public String testRedirectView(){
+        return "redirect:http://www.baidu.com/";
+    }
+
+    @RequestMapping("testJSON")
+    public String testMultiVR(Model model){
+        model.addAttribute("student", new Student("patrick", 27));
+        model.addAttribute("list", getList());
+
+        return "welcome";
+    }
+
+    private List<Student> getList(){
+        final int count = 10;
+        List<Student> students = new LinkedList<Student>();
+        for (int i = 0; i < count; i++) {
+          students.add(new Student("Patrick_" + i, 27));
+        }
+
+        return students;
     }
 }
 

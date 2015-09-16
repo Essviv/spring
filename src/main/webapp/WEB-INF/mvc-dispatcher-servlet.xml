@@ -9,14 +9,23 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.cmcc.syw.controller"/>
-    <mvc:annotation-driven enableMatrixVariables="true" conversion-service="conversionService">
+    <mvc:annotation-driven enableMatrixVariables="true"
+                           conversion-service="conversionService">
         <mvc:message-converters>
             <bean class="com.cmcc.syw.utils.StudentMsgConverter"/>
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.cmcc.syw.utils.StudentConvert"/>
+            </set>
+        </property>
+    </bean>
+
     <bean class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-        <property name="resourceLoaderPath" value="/WEB-INF/views" />
+        <property name="resourceLoaderPath" value="/WEB-INF/views"/>
         <property name="velocityProperties">
             <props>
                 <prop key="input.encoding">UTF-8</prop>
@@ -24,21 +33,69 @@
             </props>
         </property>
     </bean>
-    
-    <bean class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
-        <property name="suffix" value=".vm" />
-        <property name="cache" value="false" />
-        <property name="contentType" value="text/html;charset=UTF-8" />
+
+    <bean id="velocityLayoutVR" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
+        <property name="order" value="2"/>
+        <property name="suffix" value=".vm"/>
+        <property name="cache" value="false"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
         <property name="requestContextAttribute" value="rc"/>
         <property name="layoutUrl" value="main.vm"/>
         <property name="exposeRequestAttributes" value="true"/>
     </bean>
 
-    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
-        <property name="converters">
-            <set>
-                <bean class="com.cmcc.syw.utils.StudentConvert"/>
-            </set>
+    <mvc:interceptors>
+        <bean class="com.cmcc.syw.interceptors.CustomInterceptor"/>
+    </mvc:interceptors>
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="1"/>
+
+        <property name="contentNegotiationManager">
+            <bean  id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManager">
+                <constructor-arg name="strategies">
+                    <list>
+                        <bean class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">
+                            <constructor-arg name="mediaTypes">
+                                <map>
+                                    <entry key="json" value="application/json"/>
+                                    <entry key="xml" value="application/xml"/>
+                                    <entry key="pdf" value="application/pdf"/>
+                                    <entry key="xls" value="application/vnd.ms-excel"/>
+                                </map>
+                            </constructor-arg>
+                        </bean>
+
+                        <bean class="org.springframework.web.accept.HeaderContentNegotiationStrategy" />
+                    </list>
+                </constructor-arg>
+            </bean>
+        </property>
+
+        <property name="defaultViews">
+            <list>
+                <!-- JSON -->
+                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+
+                <!-- XML -->
+                <bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+                    <constructor-arg>
+                        <bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+                            <property name="classesToBeBound">
+                                <list>
+                                    <value>com.cmcc.syw.model.Student</value>
+                                </list>
+                            </property>
+                        </bean>
+                    </constructor-arg>
+                </bean>
+
+                <!-- PDF -->
+                <bean class="com.cmcc.syw.views.PdfView"/>
+
+                <!-- XLS -->
+                <bean class="com.cmcc.syw.views.ExcelView"/>
+            </list>
         </property>
     </bean>
 </beans>
