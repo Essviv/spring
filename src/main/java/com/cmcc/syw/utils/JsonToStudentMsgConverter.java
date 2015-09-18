@@ -2,6 +2,7 @@ package com.cmcc.syw.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.cmcc.syw.model.Student;
+import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.http.HttpInputMessage;
 import org.springframework.http.HttpOutputMessage;
 import org.springframework.http.MediaType;
@@ -11,22 +12,26 @@ import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.util.StreamUtils;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by sunyiwei on 2015/9/2.
+ * Created by sunyiwei on 2015/9/18.
  */
-public class StudentMsgConverter implements HttpMessageConverter<Student> {
+public class JsonToStudentMsgConverter implements HttpMessageConverter<Student> {
     @Override
     public boolean canRead(Class<?> clazz, MediaType mediaType) {
         return clazz.equals(Student.class) && supports(mediaType);
     }
 
+    @Override
+    public boolean canWrite(Class<?> clazz, MediaType mediaType) {
+        return clazz.equals(Student.class) && supports(mediaType);
+    }
+
     private boolean supports(MediaType mt){
-        if(mt==null || mt.equals(MediaType.ALL)){
+        if (mt == null || MediaType.ALL.equals(mt)) {
             return true;
         }
 
@@ -41,14 +46,10 @@ public class StudentMsgConverter implements HttpMessageConverter<Student> {
     }
 
     @Override
-    public boolean canWrite(Class<?> clazz, MediaType mediaType) {
-        return clazz.equals(Student.class) && supports(mediaType);
-    }
-
-    @Override
     public List<MediaType> getSupportedMediaTypes() {
         List<MediaType> mts = new LinkedList<MediaType>();
-        mts.add(MediaType.APPLICATION_JSON);
+        mts.add(MediaType.TEXT_HTML);
+        mts.add(MediaType.ALL);
 
         return mts;
     }
@@ -56,7 +57,16 @@ public class StudentMsgConverter implements HttpMessageConverter<Student> {
     @Override
     public Student read(Class<? extends Student> clazz, HttpInputMessage inputMessage) throws IOException, HttpMessageNotReadableException {
         String content = StreamUtils.copyToString(inputMessage.getBody(), Charset.forName("utf-8"));
-        return JSON.parseObject(content, Student.class);
+
+        int index = 0;
+        String[] results = new String[2];
+        String[] comps = content.split("&");
+        for (String comp : comps) {
+            String[] tmps = comp.split("=");
+            results[index++] = tmps[1];
+        }
+
+        return new Student(results[0], NumberUtils.toInt(results[1], 27));
     }
 
     @Override

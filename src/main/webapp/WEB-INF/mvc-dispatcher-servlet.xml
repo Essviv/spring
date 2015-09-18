@@ -13,7 +13,8 @@
     <mvc:annotation-driven enableMatrixVariables="true"
                            conversion-service="conversionService">
         <mvc:message-converters>
-            <bean class="com.cmcc.syw.utils.StudentMsgConverter"/>
+            <!--<bean class="com.cmcc.syw.utils.StudentMsgConverter"/>-->
+            <bean class="com.cmcc.syw.utils.JsonToStudentMsgConverter" />
         </mvc:message-converters>
     </mvc:annotation-driven>
 

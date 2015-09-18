@@ -1,5 +1,6 @@
 package com.cmcc.syw.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.cmcc.syw.model.Student;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
@@ -225,6 +226,24 @@ public class HelloController {
 
     private String getName(String baseDir, String oriName){
         return baseDir + oriName;
+    }
+
+    @RequestMapping("tc/{name}/{age}")
+    @ResponseBody
+    public String testConversion(@PathVariable("name") Student student, @PathVariable int age){
+        student.setAge(age);
+        return JSON.toJSONString(student);
+    }
+
+    @RequestMapping("hmc/show")
+    public String showHMC(){
+        return "trb";
+    }
+
+    @RequestMapping(value = "hmc/{name}/{age}", produces = "text/html")
+    @ResponseBody
+    public Student testHMC(@RequestBody Student student){
+        return student;
     }
 }
 

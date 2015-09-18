@@ -1,0 +1,8 @@
+#set($contextPath = $rc.contextPath)
+
+<form id="testRequestBody" action="$contextPath/hmc/sunyiwei/27.html" method="post">
+    <input type="text" name="name" placeholder="Enter your name..."/><br/>
+    <input type="text" name="age" placeholder="Your age..." /><br/>
+
+    <input type="submit" />
+</form>
