@@ -1,0 +1,9 @@
+#set($contextPath = $rc.contextPath)
+
+<form id="testUpload" action="$contextPath/upload.html" method="post" enctype="multipart/form-data">
+    <input type="text" name="name" placeholder="Enter your name..."/><br/>
+    <input type="text" name="age" placeholder="Your age..." /><br/>
+    <input type="file" name="file" placeholder="choose a file..."/><br/>
+
+    <input type="submit" />
+</form>

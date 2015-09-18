@@ -21,6 +21,8 @@ public class PdfView extends AbstractPdfView {
                                     PdfWriter writer,
                                     HttpServletRequest request,
                                     HttpServletResponse response) throws Exception {
+        response.setHeader("Content-disposition", "attachment;filename=" + "test.pdf");
+
         Set<String> keySet = model.keySet();
         for (String s : keySet) {
             document.add(new Paragraph(s + ": " + JSON.toJSONString(model.get(s))));

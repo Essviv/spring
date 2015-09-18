@@ -1,16 +1,18 @@
 package com.cmcc.syw.controller;
 
 import com.cmcc.syw.model.Student;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.transform.Source;
+import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.LinkedList;
@@ -132,22 +134,21 @@ public class HelloController {
 //    public String testModelAttribute2(){
 //        return "Michal Jordan";
 //    }
-
     @RequestMapping("ma/{myName}")
-    public String testModelAttribute3(@ModelAttribute("myName") Student student){
+    public String testModelAttribute3(@ModelAttribute("myName") Student student) {
         System.out.println(student.toString());
         return "hello";
     }
 
     @RequestMapping("sa")
-    public String testModelAttribute4(@ModelAttribute("myName") String name){
+    public String testModelAttribute4(@ModelAttribute("myName") String name) {
         System.out.println(name);
         return "hello";
     }
 
     @RequestMapping("hello")
     @ModelAttribute("myName")
-    public  String testModelAttribute5(){
+    public String testModelAttribute5() {
         return "patrick";
     }
 
@@ -161,7 +162,7 @@ public class HelloController {
 //    }
 
     @RequestMapping("rb")
-    public String testReqRespBody(ModelMap modelMap, @RequestBody Student student){
+    public String testReqRespBody(ModelMap modelMap, @RequestBody Student student) {
         modelMap.addAttribute("name", student.getName());
         return "hello";
     }
@@ -173,31 +174,57 @@ public class HelloController {
     }
 
     @RequestMapping("testXmlVR")
-    public String testXmlViewResolver(){
+    public String testXmlViewResolver() {
         return "testXmlViewResolver";
     }
 
     @RequestMapping("testRV")
-    public String testRedirectView(){
+    public String testRedirectView() {
         return "redirect:http://www.baidu.com/";
     }
 
     @RequestMapping("testJSON")
-    public String testMultiVR(Model model){
-        model.addAttribute("student", new Student("patrick", 27));
+    public String testMultiVR(Model model) {
         model.addAttribute("list", getList());
+        model.addAttribute("student", new Student("Essviv", 27));
 
         return "welcome";
     }
 
-    private List<Student> getList(){
+    private List<Student> getList() {
         final int count = 10;
         List<Student> students = new LinkedList<Student>();
         for (int i = 0; i < count; i++) {
-          students.add(new Student("Patrick_" + i, 27));
+            students.add(new Student("Patrick_" + i, 27));
         }
 
         return students;
+    }
+
+    @RequestMapping("rs/{word}")
+    @ResponseBody
+    public String testRS(Model model, @PathVariable String word) {
+        model.addAttribute("word", word);
+        return word;
+    }
+
+    @RequestMapping("fu")
+    public String testUpload() {
+        return "upload";
+    }
+
+    @RequestMapping(value = "upload", method = RequestMethod.POST)
+    @ResponseBody
+    public String uploadSave(@RequestParam("file")MultipartFile file) throws IOException {
+        String filename = file.getOriginalFilename();
+        String basedir = "C:\\Users\\Lenovo\\Desktop\\copy\\";
+
+        FileUtils.writeByteArrayToFile(new File(getName(basedir, filename)), file.getBytes());
+        return "OK";
+    }
+
+    private String getName(String baseDir, String oriName){
+        return baseDir + oriName;
     }
 }
 
