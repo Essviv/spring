@@ -23,4 +23,10 @@
 
     <!-- import datasource -->
     <import resource="classpath:conf/spring/datasource.xml"/>
+
+    <!-- test -->
+    <import resource="beans.xml"/>
+
+    <!-- aop -->
+    <import resource="classpath:conf/aop/aop.xml"/>
 </beans>

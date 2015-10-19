@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <aop:aspectj-autoproxy/>
+
+    <bean id="customAOP" class="com.cmcc.syw.aop.CustomAOP"/>
+
+    <aop:config>
+        <aop:aspect ref="customAOP">
+            <aop:before method="test" pointcut="execution(* com.cmcc.syw.service.AuthorService.*(..))"/>
+
+            <aop:declare-parents types-matching="com.cmcc.syw.service..*"
+                                 implement-interface="com.cmcc.syw.service.TestService"
+                                 default-impl="com.cmcc.syw.service.impl.TestServiceImpl"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>

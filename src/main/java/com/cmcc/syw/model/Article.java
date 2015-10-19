@@ -1,5 +1,8 @@
 package com.cmcc.syw.model;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 public class Article {
     private Long id;
 
@@ -49,5 +52,15 @@ public class Article {
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 '}';
+    }
+
+    @PostConstruct
+    public void init(){
+        System.out.println("Init...");
+    }
+
+    @PreDestroy
+    public void destruct(){
+        System.out.println("Destruct...");
     }
 }

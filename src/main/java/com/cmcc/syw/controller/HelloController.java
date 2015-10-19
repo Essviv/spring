@@ -1,18 +1,31 @@
 package com.cmcc.syw.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.cmcc.syw.model.Author;
 import com.cmcc.syw.model.Student;
+import com.cmcc.syw.service.AuthorService;
+import com.cmcc.syw.service.TestService;
 import org.apache.commons.io.FileUtils;
+import org.openid4java.consumer.ConsumerException;
+import org.openid4java.consumer.ConsumerManager;
+import org.openid4java.discovery.DiscoveryException;
+import org.openid4java.discovery.DiscoveryInformation;
+import org.openid4java.message.AuthRequest;
+import org.openid4java.message.MessageException;
+import org.openid4java.message.ax.FetchRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.transform.Source;
 import java.io.File;
 import java.io.IOException;
 import java.io.Writer;
@@ -25,6 +38,11 @@ import java.util.Set;
 @RequestMapping("/")
 @SessionAttributes("myName")
 public class HelloController {
+    @Autowired
+    AuthorService service;
+
+    public final ConsumerManager manager = new ConsumerManager();
+
     @RequestMapping(value = "hi", method = RequestMethod.GET)
     public String printWelcome() {
         return "welcome";
@@ -230,7 +248,9 @@ public class HelloController {
 
     @RequestMapping("tc/{name}/{age}")
     @ResponseBody
-    public String testConversion(@PathVariable("name") Student student, @PathVariable int age){
+    public String testConversion(HttpServletRequest request, @PathVariable("name") Student student, @PathVariable int age){
+        System.out.println(request.getQueryString());
+
         student.setAge(age);
         return JSON.toJSONString(student);
     }
@@ -244,6 +264,63 @@ public class HelloController {
     @ResponseBody
     public Student testHMC(@RequestBody Student student){
         return student;
+    }
+
+    @RequestMapping("openid/showLogin")
+    public void showLogin(HttpServletResponse response) throws IOException {
+        response.sendRedirect("http://localhost:8080/spring/tc/sunyiwei/27.html#query=434&name=patrick");
+    }
+
+    @RequestMapping(value = "openid/login", method = RequestMethod.POST)
+    public void login(String openID, HttpServletRequest request, HttpServletResponse response, UriComponentsBuilder ucb) throws MessageException, IOException, ConsumerException, DiscoveryException {
+        System.out.println(openID);
+
+
+        String returnUrl  = "http://www.baidu.com";
+
+        // perform discovery on the user-supplied identifier
+        List discoveries = manager.discover(openID);
+
+        // attempt to associate with the OpenID provider
+        // and retrieve one service endpoint for authentication
+        DiscoveryInformation discovered = manager.associate(discoveries);
+
+        // store the discovery information in the user's session
+        request.getSession().setAttribute("openid-disc", discovered);
+
+        // obtain a AuthRequest message to be sent to the OpenID provider
+        AuthRequest authReq = manager.authenticate(discovered, returnUrl);
+
+        // attribute Exchange
+        FetchRequest fetch = FetchRequest.createFetchRequest();
+        fetch.addAttribute("email", false);
+        fetch.addAttribute("firstName", false);
+        fetch.addAttribute("lastName", false);
+
+        // attach the extension to the authentication request
+        authReq.addExtension(fetch);
+
+        if (!discovered.isVersion2()) {
+            // Option 1: GET HTTP-redirect to the OpenID Provider endpoint
+            // The only method supported in OpenID 1.x
+            // redirect-URL usually limited ~2048 bytes
+            response.sendRedirect(authReq.getDestinationUrl(true));
+        } else {
+            // Option 2: HTML FORM Redirection (Allows payloads >2048 bytes)
+            response.sendRedirect(authReq.getDestinationUrl(true));
+        }
+    }
+
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext("conf/applicationContext.xml");
+        TestService testService = (TestService)context.getBean("authorService");
+        testService.test();
+    }
+
+    @RequestMapping("testAOP")
+    public String testAOP(){
+        service.insert(new Author(234L, "sunyiwei", 27));
+        return "welcome";
     }
 }
 

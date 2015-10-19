@@ -25,6 +25,6 @@ public class ExcelView extends AbstractExcelView {
 
         // write a text at A1
         cell = getCell(sheet, 0, 0);
-        setText(cell, "Spring-Excel ²âÊÔ");
+        setText(cell, "Spring-Excel æµ‹è¯•");
     }
 }
