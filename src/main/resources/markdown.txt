@@ -1,0 +1,28 @@
+~~这里会出现什么呢？~~
+
+####接下来会出来一些选项
+* 鸡
+* 鸭
+* 鱼
+
+####这是一段代码
+`
+	final String markdownFilename = "C:\\Users\\Lenovo\\Desktop\\markdown.txt";  
+	final String htmlFilename = "C:\\Users\\Lenovo\\Desktop\\markdown.html";  
+
+    String html = new Markdown4jProcessor().process(new File(markdownFilename));  
+    FileUtils.writeStringToFile(new File(htmlFilename), html);  
+`
+
+...这里会出现什么呢...
+--这里会出现什么呢--
+
+`String html = new Markdown4jProcessor().process(new File(markdownFilename));`
+
+````````````````````````
+    final String markdownFilename = "C:\\Users\\Lenovo\\Desktop\\markdown.txt";
+	final String htmlFilename = "C:\\Users\\Lenovo\\Desktop\\markdown.html";
+
+    String html = new Markdown4jProcessor().process(new File(markdownFilename));
+    FileUtils.writeStringToFile(new File(htmlFilename), html);
+````````````````````````

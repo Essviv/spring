@@ -25,5 +25,6 @@ public class XstreamUtils {
 
         Article newArticle = (Article)xStream.fromXML(new File(filename));
         System.out.println(newArticle);
+        System.out.println(newArticle.getClass().getClassLoader());
     }
 }
