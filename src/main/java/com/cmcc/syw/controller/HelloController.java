@@ -2,9 +2,11 @@ package com.cmcc.syw.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.cmcc.syw.model.Author;
+import com.cmcc.syw.model.Json;
 import com.cmcc.syw.model.Student;
 import com.cmcc.syw.service.AuthorService;
-import com.cmcc.syw.service.TestService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.commons.io.FileUtils;
 import org.openid4java.consumer.ConsumerException;
 import org.openid4java.consumer.ConsumerManager;
@@ -14,8 +16,6 @@ import org.openid4java.message.AuthRequest;
 import org.openid4java.message.MessageException;
 import org.openid4java.message.ax.FetchRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -312,9 +312,11 @@ public class HelloController {
     }
 
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("conf/applicationContext.xml");
-        TestService testService = (TestService)context.getBean("authorService");
-        testService.test();
+        Json json = new Json();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        String jsonStr = gson.toJson(json);
+        System.out.println(jsonStr);
     }
 
     @RequestMapping("testAOP")

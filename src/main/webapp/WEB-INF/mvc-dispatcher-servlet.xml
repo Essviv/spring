@@ -18,7 +18,8 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+    <bean id="conversionService"
+          class="org.springframework.context.support.ConversionServiceFactoryBean">
         <property name="converters">
             <set>
                 <bean class="com.cmcc.syw.utils.StudentConvert"/>
