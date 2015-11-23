@@ -3,11 +3,13 @@ package com.cmcc.syw.model;
 public class User {
     private Long id;
 
-    private String name;
+    private String secondName;
 
-    private Integer age;
+    private String firstName;
 
-    private String address;
+    private Integer version;
+
+    private Long roleId;
 
     public Long getId() {
         return id;
@@ -17,27 +19,35 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getSecondName() {
+        return secondName;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setSecondName(String secondName) {
+        this.secondName = secondName == null ? null : secondName.trim();
     }
 
-    public Integer getAge() {
-        return age;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName == null ? null : firstName.trim();
     }
 
-    public String getAddress() {
-        return address;
+    public Integer getVersion() {
+        return version;
     }
 
-    public void setAddress(String address) {
-        this.address = address == null ? null : address.trim();
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 }
