@@ -1,7 +1,6 @@
 package com.cmcc.syw.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.cmcc.syw.model.Author;
 import com.cmcc.syw.model.Json;
 import com.cmcc.syw.model.Student;
 import com.cmcc.syw.service.AuthorService;
@@ -303,7 +302,7 @@ public class HelloController {
         if (!discovered.isVersion2()) {
             // Option 1: GET HTTP-redirect to the OpenID Provider endpoint
             // The only method supported in OpenID 1.x
-            // redirect-URL usually limited ~2048 bytes
+            // redirect-URLTest usually limited ~2048 bytes
             response.sendRedirect(authReq.getDestinationUrl(true));
         } else {
             // Option 2: HTML FORM Redirection (Allows payloads >2048 bytes)
@@ -321,7 +320,7 @@ public class HelloController {
 
     @RequestMapping("testAOP")
     public String testAOP(){
-        service.insert(new Author(234L, "sunyiwei", 27));
+//        service.insert(new Author(234L, "sunyiwei", 27));
         return "welcome";
     }
 }

@@ -8,16 +8,17 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * markdown4jµƒ µº˘¥˙¬Î
+ * markdown4jÁöÑÂÆûË∑µ‰ª£Á†Å
  * Created by sunyiwei on 2015/10/23.
  */
 public class Markdown {
     public static void main(String[] args) throws IOException {
-        final String markdownFilename = "/markdown.txt";
+        final String markdownFilename = "C:\\Users\\Lenovo\\Desktop\\markdown.md";
         final String htmlFilename = "C:\\Users\\Lenovo\\Desktop\\markdown.html";
 
-        File file = new File(Markdown.class.getResource(markdownFilename).getFile());
-        String html = new PegDownProcessor(Extensions.ALL).markdownToHtml(FileUtils.readFileToString(file));
+        PegDownProcessor processor = new PegDownProcessor(Extensions.ALL);
+
+        String html = processor.markdownToHtml(FileUtils.readFileToString(new File(markdownFilename)));
         FileUtils.writeStringToFile(new File(htmlFilename), html);
 
         System.out.println("OK");

@@ -18,6 +18,8 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+    <import resource="classpath:conf/aop/aop.xml"/>
+
     <bean id="conversionService"
           class="org.springframework.context.support.ConversionServiceFactoryBean">
         <property name="converters">
@@ -47,9 +49,9 @@
         <property name="exposeRequestAttributes" value="true"/>
     </bean>
 
-    <mvc:interceptors>
-        <bean class="com.cmcc.syw.interceptors.CustomInterceptor"/>
-    </mvc:interceptors>
+    <!--<mvc:interceptors>-->
+        <!--<bean class="com.cmcc.syw.interceptors.CustomInterceptor"/>-->
+    <!--</mvc:interceptors>-->
 
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="order" value="1"/>
