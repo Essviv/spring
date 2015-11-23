@@ -3,15 +3,5 @@ package com.cmcc.syw.dao;
 import com.cmcc.syw.model.User;
 
 public interface UserMapper {
-    int deleteByPrimaryKey(Long id);
-
-    int insert(User record);
-
-    int insertSelective(User record);
-
-    User selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(User record);
-
-    int updateByPrimaryKey(User record);
+    int insert(User user);
 }

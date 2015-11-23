@@ -28,5 +28,5 @@
     <import resource="beans.xml"/>
 
     <!-- aop -->
-    <!--<import resource="classpath:conf/aop/aop.xml"/>-->
+    <import resource="classpath:conf/aop/aop.xml"/>
 </beans>

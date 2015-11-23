@@ -18,7 +18,7 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
-    <import resource="classpath:conf/aop/aop.xml"/>
+    <!--<import resource="classpath:conf/aop/aop.xml"/>-->
 
     <bean id="conversionService"
           class="org.springframework.context.support.ConversionServiceFactoryBean">
