@@ -15,6 +15,7 @@
 
     <tx:advice id="txAdvice">
         <tx:attributes>
+            <tx:method name="*Trans"/>
             <tx:method name="testCreate"/>
         </tx:attributes>
     </tx:advice>

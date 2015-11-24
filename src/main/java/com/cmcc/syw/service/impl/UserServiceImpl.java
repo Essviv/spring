@@ -29,6 +29,22 @@ public class UserServiceImpl implements UserService {
         testCreate();
     }
 
+    @Override
+    @Transactional
+    public  void firstTrans(){
+        try{
+            secondTrans();
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional
+    public void secondTrans(){
+        throw new RuntimeException();
+    }
+
     private User getUser(){
         User user = new User();
 

@@ -31,4 +31,9 @@ public class UserController {
             System.err.println("Runtime exception.");
         }
     }
+
+    @RequestMapping("nested")
+    public void testNestedTrans(){
+        service.firstTrans();
+    }
 }
