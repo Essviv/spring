@@ -29,4 +29,7 @@
 
     <!-- aop -->
     <import resource="classpath:conf/aop/aop.xml"/>
+
+    <!-- shiro -->
+    <import resource="classpath:conf/shiro/shiro.xml"/>
 </beans>
