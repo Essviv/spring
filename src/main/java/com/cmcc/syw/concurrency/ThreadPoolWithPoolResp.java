@@ -1,8 +1,5 @@
 package com.cmcc.syw.concurrency;
 
-import org.springframework.stereotype.Service;
-import sun.applet.Main;
-
 import java.io.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

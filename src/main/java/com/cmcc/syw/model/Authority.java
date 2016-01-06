@@ -2,12 +2,14 @@ package com.cmcc.syw.model;
 
 import java.util.Date;
 
-public class User {
+public class Authority {
     private Long id;
 
     private String guid;
 
     private String name;
+
+    private String code;
 
     private Date createTime;
 
@@ -37,6 +39,14 @@ public class User {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code == null ? null : code.trim();
     }
 
     public Date getCreateTime() {

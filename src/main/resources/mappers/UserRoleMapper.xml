@@ -1,45 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.cmcc.syw.dao.UserMapper">
-    <resultMap id="BaseResultMap" type="com.cmcc.syw.model.User">
+<mapper namespace="com.cmcc.syw.dao.UserRoleMapper">
+    <resultMap id="BaseResultMap" type="com.cmcc.syw.model.UserRole">
         <id column="id" property="id" jdbcType="BIGINT"/>
         <result column="guid" property="guid" jdbcType="VARCHAR"/>
-        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="user_guid" property="userGuid" jdbcType="VARCHAR"/>
+        <result column="role_guid" property="roleGuid" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
         <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
         <result column="delete_flag" property="deleteFlag" jdbcType="BIT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-      id, guid, name, create_time, update_time, delete_flag
+        id, guid, user_guid, role_guid, create_time, update_time, delete_flag
     </sql>
 
     <select id="get" resultMap="BaseResultMap" parameterType="java.lang.String">
         select
             <include refid="Base_Column_List"/>
         from
-            user
+            user_role
         where
             guid = #{guid, jdbcType = VARCHAR}
     </select>
 
     <update id="delete" parameterType="java.lang.String">
         update
-            user
+            user_role
         set
             delete_flag = 1
         where
             guid = #{guid, jdbcType = VARCHAR}
     </update>
 
-    <insert id="insert" parameterType="com.cmcc.syw.model.User"
+    <insert id="insert" parameterType="com.cmcc.syw.model.UserRole"
         useGeneratedKeys="true" keyProperty="id">
-    insert into user (guid, name,
-      create_time, update_time, delete_flag)
-    values (#{guid,jdbcType=VARCHAR},
-        #{name,jdbcType=VARCHAR},
-        #{createTime,jdbcType=TIMESTAMP},
-        #{updateTime,jdbcType=TIMESTAMP},
-        #{deleteFlag,jdbcType=BIT})
-  </insert>
+        insert into user_role (guid, user_guid,
+        role_guid, create_time, update_time, delete_flag)
+        values (#{guid,jdbcType=VARCHAR},
+            #{userGuid,jdbcType=VARCHAR},
+            #{roleGuid,jdbcType=VARCHAR},
+            #{createTime,jdbcType=TIMESTAMP},
+            #{updateTime,jdbcType=TIMESTAMP},
+            #{deleteFlag,jdbcType=BIT})
+    </insert>
 </mapper>

@@ -2,7 +2,7 @@ package com.cmcc.syw.model;
 
 import java.util.Date;
 
-public class User {
+public class Role {
     private Long id;
 
     private String guid;

@@ -2,12 +2,14 @@ package com.cmcc.syw.model;
 
 import java.util.Date;
 
-public class User {
+public class UserRole {
     private Long id;
 
     private String guid;
 
-    private String name;
+    private String userGuid;
+
+    private String roleGuid;
 
     private Date createTime;
 
@@ -31,12 +33,20 @@ public class User {
         this.guid = guid == null ? null : guid.trim();
     }
 
-    public String getName() {
-        return name;
+    public String getUserGuid() {
+        return userGuid;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setUserGuid(String userGuid) {
+        this.userGuid = userGuid == null ? null : userGuid.trim();
+    }
+
+    public String getRoleGuid() {
+        return roleGuid;
+    }
+
+    public void setRoleGuid(String roleGuid) {
+        this.roleGuid = roleGuid == null ? null : roleGuid.trim();
     }
 
     public Date getCreateTime() {
