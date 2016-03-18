@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/security
+       http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+    <!-- web security -->
+    <http pattern="/jquery/*" security="none"/>
+
+    <http>
+        <intercept-url pattern="/**" access="hasRole('USER')"/>
+        <form-login authentication-success-handler-ref="customSuccessHandler"/>
+        <!--<http-basic/>-->
+        <logout/>
+    </http>
+
+    <!-- method security -->
+
+    <!-- authencationManager -->
+
+    <!-- accessDecisionManager -->
+
+    <!-- authenticationProvider -->
+
+    <!-- userDetailsService -->
+    <authentication-manager>
+        <authentication-provider user-service-ref="customUserService">
+            <password-encoder ref="customEncoder">
+                <salt-source ref="customSaltSource"/>
+            </password-encoder>
+        </authentication-provider>
+    </authentication-manager>
+
+    <beans:bean id="customSuccessHandler" class="com.cmcc.syw.handlers.CustomSuccessHandler"/>
+    <beans:bean id="customUserService" class="com.cmcc.syw.service.CustomUserDetailService"/>
+    <beans:bean id="customSaltSource" class="com.cmcc.syw.service.CustomSaltSource"/>
+    <beans:bean id="customEncoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+        <beans:constructor-arg name="strength" value="256"/>
+    </beans:bean>
+</beans:beans>

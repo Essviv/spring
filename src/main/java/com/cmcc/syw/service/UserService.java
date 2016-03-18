@@ -1,14 +1,12 @@
 package com.cmcc.syw.service;
 
+import com.cmcc.syw.model.User;
+
 /**
  * Created by sunyiwei on 2015/11/23.
  */
 public interface UserService {
-    boolean testCreate();
+    User get(String guid);
 
-    void noTransactional();
-
-    void firstTrans();
-
-    void secondTrans();
+    User getByName(String name);
 }

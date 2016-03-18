@@ -9,6 +9,10 @@ public class User {
 
     private String name;
 
+    private String password;
+
+    private String salt;
+
     private Date createTime;
 
     private Date updateTime;
@@ -61,5 +65,21 @@ public class User {
 
     public void setDeleteFlag(Boolean deleteFlag) {
         this.deleteFlag = deleteFlag;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
     }
 }

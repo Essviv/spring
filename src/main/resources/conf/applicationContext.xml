@@ -24,12 +24,6 @@
     <!-- import datasource -->
     <import resource="classpath:conf/spring/datasource.xml"/>
 
-    <!-- test -->
-    <import resource="beans.xml"/>
-
-    <!-- aop -->
-    <import resource="classpath:conf/aop/aop.xml"/>
-
-    <!-- shiro -->
-    <import resource="classpath:conf/shiro/shiro.xml"/>
+    <!-- spring-security -->
+    <import resource="classpath:conf/springsecurity/spring-security.xml"/>
 </beans>

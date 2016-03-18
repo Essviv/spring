@@ -2,107 +2,33 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.cmcc.syw.controller"/>
 
-    <mvc:annotation-driven enableMatrixVariables="true"
-                           conversion-service="conversionService">
-        <mvc:message-converters>
-            <!--<bean class="com.cmcc.syw.utils.StudentMsgConverter"/>-->
-            <bean class="com.cmcc.syw.utils.JsonToStudentMsgConverter" />
-        </mvc:message-converters>
-    </mvc:annotation-driven>
-
-    <!--<import resource="classpath:conf/aop/aop.xml"/>-->
-
-    <bean id="conversionService"
-          class="org.springframework.context.support.ConversionServiceFactoryBean">
-        <property name="converters">
-            <set>
-                <bean class="com.cmcc.syw.utils.StudentConvert"/>
-            </set>
-        </property>
-    </bean>
-
-    <bean class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-        <property name="resourceLoaderPath" value="/WEB-INF/views"/>
+    <!-- 配置velocity引擎 -->
+    <bean id="velocityConfigurer"
+          class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="resourceLoaderPath" value="/WEB-INF/views/" /><!-- 模板存放的路径 -->
         <property name="velocityProperties">
             <props>
-                <prop key="input.encoding">UTF-8</prop>
-                <prop key="output.encoding">UTF-8</prop>
+                <prop key="input.encoding">utf-8</prop>
+                <prop key="output.encoding">utf-8</prop>
             </props>
         </property>
     </bean>
 
-    <bean id="velocityLayoutVR" class="org.springframework.web.servlet.view.velocity.VelocityLayoutViewResolver">
-        <property name="order" value="2"/>
-        <property name="suffix" value=".vm"/>
-        <property name="cache" value="false"/>
-        <property name="contentType" value="text/html;charset=UTF-8"/>
-        <property name="requestContextAttribute" value="rc"/>
-        <property name="layoutUrl" value="main.vm"/>
-        <property name="exposeRequestAttributes" value="true"/>
+    <!-- 配置视图的显示 -->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <property name="suffix" value=".vm" /><!-- 视图文件的后缀名 -->
+        <property name="dateToolAttribute" value="date" /><!--日期函数名称-->
+        <property name="numberToolAttribute" value="number" /><!--数字函数名称-->
+        <property name="contentType" value="text/html;charset=UTF-8" />
+        <property name="exposeSpringMacroHelpers" value="true" /><!--是否使用spring对宏定义的支持-->
+        <property name="exposeRequestAttributes" value="true" /><!--是否开放request属性-->
+        <property name="requestContextAttribute" value="rc"/><!--request属性引用名称-->
     </bean>
-
-    <!--<mvc:interceptors>-->
-        <!--<bean class="com.cmcc.syw.interceptors.CustomInterceptor"/>-->
-    <!--</mvc:interceptors>-->
-
-    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-        <property name="order" value="1"/>
-
-        <property name="contentNegotiationManager">
-            <bean  id="contentNegotiationManager" class="org.springframework.web.accept.ContentNegotiationManager">
-                <constructor-arg name="strategies">
-                    <list>
-                        <bean class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">
-                            <constructor-arg name="mediaTypes">
-                                <map>
-                                    <entry key="json" value="application/json"/>
-                                    <entry key="xml" value="application/xml"/>
-                                    <entry key="pdf" value="application/pdf"/>
-                                    <entry key="xls" value="application/vnd.ms-excel"/>
-                                </map>
-                            </constructor-arg>
-                        </bean>
-
-                        <bean class="org.springframework.web.accept.HeaderContentNegotiationStrategy" />
-                    </list>
-                </constructor-arg>
-            </bean>
-        </property>
-
-        <property name="defaultViews">
-            <list>
-                <!-- JSON -->
-                <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
-
-                <!-- XML -->
-                <bean class="org.springframework.web.servlet.view.xml.MarshallingView">
-                    <constructor-arg>
-                        <bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
-                            <property name="classesToBeBound">
-                                <list>
-                                    <value>com.cmcc.syw.model.Student</value>
-                                </list>
-                            </property>
-                        </bean>
-                    </constructor-arg>
-                </bean>
-
-                <!-- PDF -->
-                <bean class="com.cmcc.syw.views.PdfView"/>
-
-                <!-- XLS -->
-                <bean class="com.cmcc.syw.views.ExcelView"/>
-            </list>
-        </property>
-    </bean>
-
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 </beans>

@@ -18,6 +18,8 @@ CREATE TABLE `user` (
   `id`  bigint(18) NOT NULL AUTO_INCREMENT COMMENT '自增ID' ,
   `guid`  varchar(64) NOT NULL COMMENT '应用内唯一标识',
   `name`  varchar(255) NULL COMMENT '用户名称',
+  `password`  varchar(16) NOT NULL COMMENT '用户密码',
+  `salt`  varchar(64) NOT NULL COMMENT '密码盐',
   `create_time` timestamp NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   `delete_flag`  tinyint(1) NOT NULL  COMMENT '删除标识',
