@@ -75,10 +75,22 @@
         </dependency>
 
         <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.11</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.23</version>
         </dependency>
 
         <!-- 数据源包 -->
@@ -93,8 +105,8 @@
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
-            <scope>provided</scope>
         </dependency>
+
 
         <!-- mybatis -->
         <dependency>
@@ -263,6 +275,7 @@
             <version>1.2</version>
         </dependency>
 
+<<<<<<< f684d74ce6b4c0b92c0fa2cea989d8ceef4903e1
         <!-- spring security -->
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -293,6 +306,12 @@
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
             <version>1.4.4</version>
+=======
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.8.0</version>
+>>>>>>> add thread learning code
         </dependency>
     </dependencies>
 
