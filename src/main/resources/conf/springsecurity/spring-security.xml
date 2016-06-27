@@ -11,12 +11,12 @@
     <http pattern="/springDoc/**" security="none"/>
     <http pattern="/assets/**" security="none"/>
 
-    <http>
-        <intercept-url pattern="/**" access="hasRole('USER')"/>
-        <form-login authentication-success-handler-ref="customSuccessHandler"/>
-        <!--<http-basic/>-->
-        <logout/>
-    </http>
+    <!--<http>-->
+        <!--<intercept-url pattern="/**" access="hasRole('USER')"/>-->
+        <!--<form-login authentication-success-handler-ref="customSuccessHandler"/>-->
+        <!--&lt;!&ndash;<http-basic/>&ndash;&gt;-->
+        <!--<logout/>-->
+    <!--</http>-->
 
     <!-- method security -->
 
