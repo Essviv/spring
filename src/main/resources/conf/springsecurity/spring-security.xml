@@ -9,6 +9,7 @@
     <!-- web security -->
     <http pattern="/jquery/*" security="none"/>
     <http pattern="/springDoc/**" security="none"/>
+    <http pattern="/assets/**" security="none"/>
 
     <http>
         <intercept-url pattern="/**" access="hasRole('USER')"/>
