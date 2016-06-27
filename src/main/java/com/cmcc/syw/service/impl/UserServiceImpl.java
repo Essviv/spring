@@ -4,6 +4,7 @@ import com.cmcc.syw.dao.UserMapper;
 import com.cmcc.syw.model.User;
 import com.cmcc.syw.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * Created by sunyiwei on 2016/1/7.
  */
+@Service
 public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;

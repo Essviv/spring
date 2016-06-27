@@ -7,7 +7,7 @@ import java.util.Date;
 /**
  * Created by sunyiwei on 16/6/12.
  */
-@XStreamAlias("Request")
+@XStreamAlias("PersonRequest")
 public class Person {
     private String name;
 

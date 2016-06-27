@@ -12,7 +12,6 @@
         <result column="delete_flag" property="deleteFlag" jdbcType="BIT"/>
     </resultMap>
 
-<<<<<<< f684d74ce6b4c0b92c0fa2cea989d8ceef4903e1
     <sql id="Base_Column_List">
       id, guid, name, password, salt, create_time, update_time, delete_flag
     </sql>
@@ -55,25 +54,5 @@
         #{createTime,jdbcType=TIMESTAMP},
         #{updateTime,jdbcType=TIMESTAMP},
         #{deleteFlag,jdbcType=BIT})
-=======
-    <insert id="insert" parameterType="com.cmcc.syw.model.User" >
-        insert into user (id, second_name, first_name,
-        version, role_id)
-        values (#{id,jdbcType=BIGINT}, #{secondName,jdbcType=VARCHAR}, #{firstName,jdbcType=VARCHAR},
-        #{version,jdbcType=INTEGER}, #{roleId,jdbcType=BIGINT})
     </insert>
-
-
-  <insert id="batchInsert" parameterType="java.util.List">
-            insert into user (second_name, first_name,
-        version, role_id)
-        values
-          <foreach collection="users" item="user" separator=",">
-
-              (#{user.secondName,jdbcType=VARCHAR}, #{user.firstName,jdbcType=VARCHAR},
-              #{user.version,jdbcType=INTEGER}, #{user.roleId,jdbcType=BIGINT})
-
-          </foreach>
->>>>>>> add thread learning code
-  </insert>
 </mapper>

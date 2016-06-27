@@ -8,6 +8,7 @@
        http://www.springframework.org/schema/security/spring-security-4.0.xsd">
     <!-- web security -->
     <http pattern="/jquery/*" security="none"/>
+    <http pattern="/springDoc/**" security="none"/>
 
     <http>
         <intercept-url pattern="/**" access="hasRole('USER')"/>
