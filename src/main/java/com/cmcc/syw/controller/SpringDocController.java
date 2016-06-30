@@ -1,19 +1,13 @@
 package com.cmcc.syw.controller;
 
+import com.cmcc.syw.model.Person;
 import com.google.gson.Gson;
-
-import com.cmcc.syw.model.Car;
-
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,13 +32,19 @@ public class SpringDocController {
         return "OK";
     }
 
+    @RequestMapping("person")
+    @ResponseBody
+    public Person person(@RequestBody Person person) {
+        return person;
+    }
+
     @RequestMapping("resp")
     public HttpEntity<Person> param() {
         return null;
     }
 
     @InitBinder
-    public void initBinder(WebDataBinder webDataBinder){
+    public void initBinder(WebDataBinder webDataBinder) {
         webDataBinder.registerCustomEditor(Date.class,
                 new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), false));
 
@@ -54,19 +54,7 @@ public class SpringDocController {
 
     @RequestMapping("initBinder")
     @ResponseBody
-    public String param(Date date){
+    public String param(Date date) {
         return new Gson().toJson(date);
-    }
-
-    private class Person {
-        private String name;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
     }
 }

@@ -16,15 +16,28 @@ import java.util.concurrent.Callable;
 @RequestMapping("/async")
 @Controller
 public class AsyncRequestController {
-    @RequestMapping("query")
+    @RequestMapping("async")
     @ResponseBody
-    public Callable<Person> asyn() {
+    public Callable<Person> async() {
         return () -> {
             Thread.sleep(2000);
 
             return buildPerson();
         };
     }
+
+    @RequestMapping("sync")
+    @ResponseBody
+    public Person sync() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return buildPerson();
+    }
+
 
     @RequestMapping("queryDefered")
     @ResponseBody
@@ -48,7 +61,7 @@ public class AsyncRequestController {
     }
 
 
-    private Person buildPerson(){
+    private Person buildPerson() {
         return buildPerson("sunyiwei");
     }
 
