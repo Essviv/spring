@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+
+    #set($contextPath = $rc.contextPath)
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>资源</title>
+
+    <script src="$contextPath/assets/js/main.js" charset="utf-8"></script>
+</head>
+
+<body>
+    <h1>看console</h1>
+</body>
+</html>
