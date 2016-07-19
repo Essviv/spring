@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
+import java.util.RandomAccess;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -29,6 +30,9 @@ public class FirstZooKeeper {
         //连接完成了，开始干活！
         String path = zooKeeper.create("/test", "hello_world".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT_SEQUENTIAL);
         LOGGER.info("{} has been created.", path);
+
+        //测试
+        testWatchEvent(zooKeeper);
 
         //显示点数据来看看
         String parent = "/";
@@ -67,26 +71,112 @@ public class FirstZooKeeper {
     }
 
     private static void testWatchEvent(ZooKeeper zooKeeper){
-        testGetChildrenEvent(zooKeeper);
+        try {
+            testGetChildrenEvent(zooKeeper);
 
-        testGetDataEvent(zooKeeper);
+            testGetDataEvent(zooKeeper);
 
-        testExistEvent(zooKeeper);
+            testExistEvent(zooKeeper);
+        } catch (KeeperException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void testGetChildrenEvent(ZooKeeper zooKeeper) throws KeeperException, InterruptedException {
-        String randomStr = randomStr(10);
+        String random = randomStr(10);
+        Watcher watcher = new CustomWatcher();
 
-        String path = zooKeeper.create(randomStr, randomStr(20).getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+        String path = zooKeeper.create(random, randomStr(20).getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        LOGGER.error("{} created!", path);
 
+        //create child
+        List<String> children = zooKeeper.getChildren(path,watcher);
+        String subPath = zooKeeper.create(subPath(path), randomStr(5).getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+
+        //set child data
+        children = zooKeeper.getChildren(path, watcher);
+        zooKeeper.setData(subPath, randomStr(8).getBytes(), 0);
+
+        //delete child
+        children = zooKeeper.getChildren(path, watcher);
+        zooKeeper.delete(subPath, 1);
+
+        //set data
+        children = zooKeeper.getChildren(path, watcher);
+        zooKeeper.setData(path, randomStr(8).getBytes(), 0);
+
+        //delete node
+        children = zooKeeper.getChildren(path, watcher);
+        zooKeeper.delete(path,1);
     }
 
-    private static void testExistEvent(ZooKeeper zooKeeper){
-
+    private static String subPath(String path){
+        return path + randomStr(5);
     }
 
-    private static void testGetDataEvent(ZooKeeper zooKeeper){
+    private static class CustomWatcher implements Watcher{
+        @Override
+        public void process(WatchedEvent watchedEvent) {
+            LOGGER.error("{}节点发生了{}事件.", watchedEvent.getPath(), parseType(watchedEvent.getType()));
+        }
+    }
 
+
+    private static void testExistEvent(ZooKeeper zooKeeper) throws KeeperException, InterruptedException {
+        String random = randomStr(10);
+        Watcher watcher = new CustomWatcher();
+
+        String path = zooKeeper.create(random, randomStr(20).getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        LOGGER.error("{} created!", path);
+
+        //create child
+        Stat children = zooKeeper.exists(path, watcher);
+        String subPath = zooKeeper.create(subPath(path), randomStr(5).getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+
+        //set child data
+        children = zooKeeper.exists(path,watcher);
+        zooKeeper.setData(subPath, randomStr(8).getBytes(), 0);
+
+        //delete child
+        children = zooKeeper.exists(path,watcher);
+        zooKeeper.delete(subPath, 1);
+
+        //set data
+        children = zooKeeper.exists(path,watcher);
+        zooKeeper.setData(path, randomStr(8).getBytes(), 0);
+
+        //delete node
+        children = zooKeeper.exists(path,watcher);
+        zooKeeper.delete(path,1);
+    }
+
+    private static void testGetDataEvent(ZooKeeper zooKeeper) throws KeeperException, InterruptedException {
+        String random = randomStr(10);
+        Watcher watcher = new CustomWatcher();
+
+        String path = zooKeeper.create(random, randomStr(20).getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.PERSISTENT);
+        LOGGER.error("{} created!", path);
+
+        //create child
+        Stat stat = new Stat();
+        byte[] children = zooKeeper.getData(path, watcher, stat);
+        String subPath = zooKeeper.create(subPath(path), randomStr(5).getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE, CreateMode.EPHEMERAL);
+
+        //set child data
+        children = zooKeeper.getData(path, watcher, stat);
+        zooKeeper.setData(subPath, randomStr(8).getBytes(), 0);
+
+        //delete child
+        children = zooKeeper.getData(path, watcher, stat);
+        zooKeeper.delete(subPath, 1);
+
+        //set data
+        children = zooKeeper.getData(path, watcher, stat);
+        zooKeeper.setData(path, randomStr(8).getBytes(), 0);
+
+        //delete node
+        children = zooKeeper.getData(path, watcher, stat);
+        zooKeeper.delete(path,1);
     }
 
     private static String parseType(Watcher.Event.EventType eventType) {
