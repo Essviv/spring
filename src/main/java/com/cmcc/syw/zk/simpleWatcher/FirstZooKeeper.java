@@ -1,4 +1,4 @@
-package com.cmcc.syw.zk;
+package com.cmcc.syw.zk.simpleWatcher;
 
 import com.google.gson.Gson;
 import org.apache.zookeeper.*;
@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.List;
 import java.util.Random;
-import java.util.RandomAccess;
 import java.util.concurrent.CountDownLatch;
 
 /**

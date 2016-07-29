@@ -1,4 +1,4 @@
-package com.cmcc.syw.zk;
+package com.cmcc.syw.zk.simpleWatcher;
 
 /**
  * Created by sunyiwei on 2016/7/21.

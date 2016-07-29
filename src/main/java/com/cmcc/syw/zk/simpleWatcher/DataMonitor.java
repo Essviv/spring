@@ -1,4 +1,4 @@
-package com.cmcc.syw.zk;
+package com.cmcc.syw.zk.simpleWatcher;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.zookeeper.*;
