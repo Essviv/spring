@@ -16,7 +16,7 @@
         <property name="password" value="@{jdbc.password}"/>
 
         <!-- 连接池最大使用连接数 -->
-        <property name="maxActive" value="400"/>
+        <property name="maxActive" value="1000"/>
 
         <!-- 初始化连接大小 -->
         <property name="initialSize" value="2"/>

@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.*;
 
 import static org.junit.Assert.assertTrue;
@@ -71,7 +74,7 @@ public class AccountServiceImplTest {
         final int subBlockSize = totalCount / COUNT;
         List<Integer> list = randInt(totalCount);
         CountDownLatch countDownLatch = new CountDownLatch(COUNT);
-        Map<Integer, Integer> map = new ConcurrentHashMap<Integer, Integer>();
+        Map<Integer, Integer> map = new ConcurrentHashMap<>(totalCount);
 
         for (int i = 0; i < COUNT; i++) {
             final int index = i;
@@ -80,10 +83,15 @@ public class AccountServiceImplTest {
                 public void run() {
                     int begin = index * subBlockSize;
                     int end = begin + subBlockSize;
-                    for (int j = begin; j < end; j++) {
-                        if(operator.operate(id, list.get(j))) {
-                            map.put(j, list.get(j));
+
+                    try {
+                        for (int j = begin; j < end; j++) {
+                            if (operator.operate(id, list.get(j))) {
+                                map.put(j, list.get(j));
+                            }
                         }
+                    } catch (Exception e) {
+                        System.err.println("Error: " + e);
                     }
 
                     countDownLatch.countDown();
@@ -92,6 +100,7 @@ public class AccountServiceImplTest {
         }
 
         countDownLatch.await();
+        System.out.println("CountDownLatch: " + countDownLatch.getCount());
         executorService.shutdownNow();
 
         account = accountService.get(id);
