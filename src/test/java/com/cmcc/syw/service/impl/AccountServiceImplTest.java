@@ -8,12 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.*;
+import java.util.concurrent.*;
 
 import static org.junit.Assert.assertTrue;
 
@@ -27,33 +23,41 @@ public class AccountServiceImplTest {
     AccountService accountService;
 
     @Test
-    public void testUpdate() throws Exception {
-        abstractOp(new Operator() {
-            @Override
-            public int operate(Long id, int delta) {
-                if (!accountService.update(id, delta)) {
-                    System.err.println("操作账户失败[Update], 金额为" + delta);
-                    return delta;
-                }
+    public void testUpdate() {
+        try {
+            abstractOp(new Operator() {
+                @Override
+                public boolean operate(Long id, int delta) {
+                    if (!accountService.update(id, delta)) {
+                        System.err.println("操作账户失败[Update], 金额为" + delta);
+                        return true;
+                    }
 
-                return 0;
-            }
-        });
+                    return false;
+                }
+            });
+        } catch (Exception e) {
+            System.err.println("Error msg: " + e);
+        }
     }
 
     @Test
-    public void testUpdateDelta() throws Exception {
-        abstractOp(new Operator() {
-            @Override
-            public int operate(Long id, int delta) {
-                if (!accountService.updateDelta(id, delta)) {
-                    System.err.println("[UpdateDelta]操作账户失败, 金额为" + delta);
-                    return delta;
-                }
+    public void testUpdateDelta() {
+        try {
+            abstractOp(new Operator() {
+                @Override
+                public boolean operate(Long id, int delta) {
+                    if (!accountService.updateDelta(id, delta)) {
+                        System.err.println("[UpdateDelta]操作账户失败, 金额为" + delta);
+                        return true;
+                    }
 
-                return 0;
-            }
-        });
+                    return false;
+                }
+            });
+        } catch (Exception e) {
+            System.err.println("Error msg: " + e);
+        }
     }
 
     private void abstractOp(Operator operator) throws InterruptedException {
@@ -67,7 +71,7 @@ public class AccountServiceImplTest {
         final int subBlockSize = totalCount / COUNT;
         List<Integer> list = randInt(totalCount);
         CountDownLatch countDownLatch = new CountDownLatch(COUNT);
-        final int[] errorCount = {0};
+        Map<Integer, Integer> map = new ConcurrentHashMap<Integer, Integer>();
 
         for (int i = 0; i < COUNT; i++) {
             final int index = i;
@@ -77,9 +81,8 @@ public class AccountServiceImplTest {
                     int begin = index * subBlockSize;
                     int end = begin + subBlockSize;
                     for (int j = begin; j < end; j++) {
-                        int delta = operator.operate(id, list.get(j));
-                        synchronized (errorCount){
-                            errorCount[0] +=delta;
+                        if(operator.operate(id, list.get(j))) {
+                            map.put(j, list.get(j));
                         }
                     }
 
@@ -95,7 +98,7 @@ public class AccountServiceImplTest {
         System.out.println(account.getCount());
         System.out.println(account.getVersion());
         System.out.println(list.stream().mapToInt(Integer::intValue).sum());
-        System.out.println(errorCount[0]);
+        System.out.println(new LinkedList<>(map.values()).stream().mapToInt(Integer::intValue).sum());
     }
 
     private List<Integer> randInt(int totalCount) {
@@ -117,6 +120,6 @@ public class AccountServiceImplTest {
     }
 
     private interface Operator {
-        int operate(Long id, int delta);
+        boolean operate(Long id, int delta);
     }
 }
