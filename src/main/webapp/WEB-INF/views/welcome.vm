@@ -64,6 +64,10 @@
 </p>
 
 <p>
+    <button type="button" onclick="testCookie();">测试Cookie</button>
+</p>
+
+<p>
     <button type="button" onclick="testObj();">测试对象</button>
 </p>
 
@@ -87,13 +91,15 @@
 
 <script>
     function testAjax() {
-        var xmlHttpRequest = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Micorsoft.XMLHTTP");
+        var xmlHttpRequest = window.XMLHttpRequest ? new XMLHttpRequest()
+                : new ActiveXObject("Micorsoft.XMLHTTP");
         var url = "$contextPath/ajax/sunyiwei.html";
 
         xmlHttpRequest.onreadystatechange = function () {
             console.log("回调函数被执行了, 当前状态为： " + xmlHttpRequest.readyState);
             if (xmlHttpRequest.status == 200 && xmlHttpRequest.readyState == 4) {
-                var newNode = document.createTextNode("这个是由后台传过来的数据：" + xmlHttpRequest.responseText);
+                var newNode = document.createTextNode(
+                        "这个是由后台传过来的数据：" + xmlHttpRequest.responseText);
                 document.getElementById("ajax-div").appendChild(newNode);
             }
         };
@@ -111,6 +117,25 @@
 
     }
 
+    function testCookie() {
+        var xmlHttpRequest = window.XMLHttpRequest ? new XMLHttpRequest()
+                : new ActiveXObject("Micorsoft.XMLHTTP");
+        var url = "$contextPath/users/test";
+
+        xmlHttpRequest.onreadystatechange = function () {
+            console.log("回调函数被执行了, 当前状态为： " + xmlHttpRequest.readyState);
+            if (xmlHttpRequest.status == 200 && xmlHttpRequest.readyState == 4) {
+                var newNode = document.createTextNode(
+                        "这个是由后台传过来的数据：" + xmlHttpRequest.responseText);
+                document.getElementById("ajax-div").appendChild(newNode);
+            }
+        };
+
+        xmlHttpRequest.open("GET", url, true);
+        xmlHttpRequest.send();
+
+    }
+
     function testDOM() {
         var dom = document.getElementById("demo");
         dom.style.color = '#ccc';
@@ -119,7 +144,7 @@
 
 <script>
     function Person(name) {
-        console.log(this instanceof  Person);
+        console.log(this instanceof Person);
         this.name = name;
     }
 
