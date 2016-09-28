@@ -1,5 +1,5 @@
 /**
- * <a href="http://www.webxml.com.cn/" target="_blank">WebXml.com.cn</a> <strong>ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø²ï¿½Ñ¯WEBï¿½ï¿½ï¿½ï¿½</strong>ï¿½ï¿½ï¿½á¹©ï¿½ï¿½ï¿½ÂµÄ¹ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½Î¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½Ã¿ï¿½Â¸ï¿½ï¿½Â¡ï¿½<br />Ê¹ï¿½Ã±ï¿½Õ¾ WEB ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó±ï¿½Õ¾ï¿½ï¿½<a href="http://www.webxml.com.cn/" target="_blank">http://www.webxml.com.cn/</a> ï¿½ï¿½Ð»ï¿½ï¿½Òµï¿½Ö§ï¿½Ö£ï¿½<br />&nbsp;
+ * <a href="http://www.webxml.com.cn/" target="_blank">WebXml.com.cn</a> <strong>¹úÄÚÊÖ»úºÅÂë¹éÊôµØ²éÑ¯WEB·þÎñ</strong>£¬Ìá¹©×îÐÂµÄ¹úÄÚÊÖ»úºÅÂë¶Î¹éÊôµØÊý¾Ý£¬Ã¿ÔÂ¸üÐÂ¡£<br />Ê¹ÓÃ±¾Õ¾ WEB ·þÎñÇë×¢Ã÷»òÁ´½Ó±¾Õ¾£º<a href="http://www.webxml.com.cn/" target="_blank">http://www.webxml.com.cn/</a> ¸ÐÐ»´ó¼ÒµÄÖ§³Ö£¡<br />&nbsp;
  * 
  */
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://WebXml.com.cn/", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)

@@ -8,9 +8,9 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>anonymous complex type锟斤拷 Java 锟洁。
+ * <p>anonymous complex type的 Java 类。
  * 
- * <p>锟斤拷锟斤拷模式片锟斤拷指锟斤拷锟斤拷锟斤拷锟节达拷锟斤拷锟叫碉拷预锟斤拷锟斤拷锟捷★拷
+ * <p>以下模式片段指定包含在此类中的预期内容。
  * 
  * <pre>
  * &lt;complexType>
@@ -39,7 +39,7 @@ public class GetMobileCodeInfo {
     protected String userID;
 
     /**
-     * 锟斤拷取mobileCode锟斤拷锟皆碉拷值锟斤拷
+     * 获取mobileCode属性的值。
      * 
      * @return
      *     possible object is
@@ -51,7 +51,7 @@ public class GetMobileCodeInfo {
     }
 
     /**
-     * 锟斤拷锟斤拷mobileCode锟斤拷锟皆碉拷值锟斤拷
+     * 设置mobileCode属性的值。
      * 
      * @param value
      *     allowed object is
@@ -63,7 +63,7 @@ public class GetMobileCodeInfo {
     }
 
     /**
-     * 锟斤拷取userID锟斤拷锟皆碉拷值锟斤拷
+     * 获取userID属性的值。
      * 
      * @return
      *     possible object is
@@ -75,7 +75,7 @@ public class GetMobileCodeInfo {
     }
 
     /**
-     * 锟斤拷锟斤拷userID锟斤拷锟皆碉拷值锟斤拷
+     * 设置userID属性的值。
      * 
      * @param value
      *     allowed object is

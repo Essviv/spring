@@ -16,13 +16,14 @@ public class Client {
         SOAPConnection connection = factory.createConnection();
 
         SOAPMessage request = buildReq();
-//        request.writeTo(System.out);
+        request.writeTo(System.out);
+        System.out.println();
 
         SOAPMessage response = connection.call(request, new URL("http://ws.webxml.com.cn/WebServices/MobileCodeWS.asmx"));
-//        response.writeTo(System.out);
+        response.writeTo(System.out);
+        System.out.println();
 
         connection.close();
-
         System.out.println(TimeUnit.MILLISECONDS.toSeconds((System.currentTimeMillis() - begin)));
     }
 
