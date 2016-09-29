@@ -10,25 +10,25 @@ import java.util.Formatter;
 public class ObjLockAndClassLock {
 
     public static void main(String[] args) {
-        final ObjLockAndClassLock olacl = new ObjLockAndClassLock();
+        final ObjLockAndClassLock local = new ObjLockAndClassLock();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    olacl.testObjLock("objLockFile1.txt");
+                    local.testObjLock("objLockFile1.txt");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }, "Obj-Lock-Thread-1").start();
 
-        //this thread would never get olacl's lock, thus won't print anything.
+        //this thread would never get local's lock, thus won't print anything.
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    olacl.testObjLock("objLockFile2.txt");
+                    local.testObjLock("objLockFile2.txt");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -50,7 +50,7 @@ public class ObjLockAndClassLock {
             @Override
             public void run() {
                 try {
-                    olacl.testNoLock("NoLockFile.txt");
+                    local.testNoLock("NoLockFile.txt");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -61,7 +61,7 @@ public class ObjLockAndClassLock {
             @Override
             public void run() {
                 try {
-                    olacl.testNoLock("NoLockFile.txt");
+                    local.testNoLock("NoLockFile.txt");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

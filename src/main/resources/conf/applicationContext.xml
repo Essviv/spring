@@ -2,8 +2,9 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
 
     <context:component-scan base-package="com.cmcc.syw">
         <context:exclude-filter type="regex" expression="com.cmcc.syw.controller.*"/>
@@ -26,4 +27,10 @@
 
     <!-- spring-security -->
     <import resource="classpath:conf/springsecurity/spring-security.xml"/>
+
+    <jaxws:endpoint id="helloWorldServer" address="/ws/helloWorld"
+                    implementor="com.cmcc.syw.cxf.HelloWorldImpl"/>
+
+    <jaxws:client id="helloWorldClient" address="http://localhost:8080/spring/ws/helloWorld"
+                  serviceClass="com.cmcc.syw.cxf.HelloWorld"/>
 </beans>
