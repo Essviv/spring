@@ -4,6 +4,7 @@ import com.cmcc.syw.cxf.HelloWorld;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -15,8 +16,9 @@ public class CxfController {
     @Autowired
     private HelloWorld helloWorld;
 
-    @RequestMapping("index")
-    public void cxf() {
-        System.out.println(helloWorld.sayHi("孙义威"));
+    @RequestMapping("index/{name}")
+    public String cxf(@PathVariable String name) {
+        System.out.println(helloWorld.sayHi(name));
+        return "welcome";
     }
 }
