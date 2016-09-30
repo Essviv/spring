@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context" xmlns:jaxws="http://cxf.apache.org/jaxws"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jaxws="http://cxf.apache.org/jaxws" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs-common.xsd">
 
     <context:component-scan base-package="com.cmcc.syw">
         <context:exclude-filter type="regex" expression="com.cmcc.syw.controller.*"/>
@@ -26,8 +30,12 @@
     <!-- spring-security -->
     <import resource="classpath:conf/springsecurity/spring-security.xml"/>
 
-    <jaxws:endpoint id="helloWorld" implementor="com.cmcc.syw.cxf.HelloWorldImpl" address="/helloWorld"/>
+    <jaxws:endpoint id="helloWorld" implementor="com.cmcc.syw.cxf.HelloWorldImpl"
+                    address="/helloWorld"/>
 
     <jaxws:client id="helloWorldClient" serviceClass="com.cmcc.syw.cxf.HelloWorld"
                   address="http://localhost:8080/spring/ws/helloWorld"/>
+
+
 </beans>
+
