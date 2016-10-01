@@ -67,6 +67,7 @@
         <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
     </servlet>
 
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
@@ -79,6 +80,7 @@
         <servlet-name>mvc-dispatcher</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
+
 
     <servlet-mapping>
         <servlet-name>cxf</servlet-name>
