@@ -2,21 +2,36 @@ package com.cmcc.syw.model;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "User")
+@XmlAccessorType(value = XmlAccessType.FIELD)
 public class User {
+    @XmlElement(name = "Id")
     private Long id;
 
+    @XmlElement(name = "Guid")
     private String guid;
 
+    @XmlElement(name = "Name")
     private String name;
 
+    @XmlElement(name = "Password")
     private String password;
 
+    @XmlElement(name = "Salt")
     private String salt;
 
+    @XmlElement(name = "CreateTime")
     private Date createTime;
 
+    @XmlElement(name = "UpdateTime")
     private Date updateTime;
 
+    @XmlElement(name = "DeleteFlag")
     private Boolean deleteFlag;
 
     public Long getId() {

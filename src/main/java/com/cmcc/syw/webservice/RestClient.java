@@ -16,6 +16,22 @@ public class RestClient {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         Client client = ClientBuilder.newClient();
 
+        //query sayHello
+        querySayHello(client);
+
+        //query getUsers
+        queryUsers(client);
+
+        client.close();
+    }
+
+    private static void queryUsers(Client client) {
+        String resp = client.target("http://localhost:8080/spring/ws/users")
+                .request(MediaType.APPLICATION_XML).get(String.class);
+        System.out.println(resp);
+    }
+
+    private static void querySayHello(Client client) throws ExecutionException, InterruptedException {
         String name = randStr(16);
         System.out.println("Name: " + name);
 
@@ -34,7 +50,6 @@ public class RestClient {
                 });
 
         resp.get();
-        client.close();
     }
 
     private static String randStr(int length) {
