@@ -1,6 +1,8 @@
 package com.cmcc.syw.scjp;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeSet;
 
 /**
@@ -8,7 +10,8 @@ import java.util.TreeSet;
  */
 public class Tester {
     public static void main(String[] args) {
-        test2();
+//        test2();
+        test3();
     }
 
     public static int sum(List<Integer> list) {
@@ -18,6 +21,18 @@ public class Tester {
         }
 
         return sum;
+    }
+
+    public static void test3() {
+        Map<Person, Integer> map = new LinkedHashMap<Person, Integer>();
+        map.put(new Person("sunyiwei"), 5);
+        map.put(new Person("lisa"), 6);
+        map.put(new Person("lisa"), 7);
+
+        System.out.println(map);
+        System.out.println(map.size());
+
+        System.out.println(map.get(new Person("sunyiwei")));
     }
 
     public static void test2() {

@@ -359,6 +359,14 @@
             <artifactId>spring-core</artifactId>
             <version>4.2.2.RELEASE</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -367,9 +375,23 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <encoding>utf8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>4.0.3</version>
+                <configuration>
+                    <url>
+                        jdbc:mysql://172.23.27.229:3306/sunyiwei7?useUnicode=true
+                    </url>
+                    <driver>com.mysql.cj.jdbc.Driver</driver>
+                    <user>sunyiwei</user>
+                    <password>7Ubn0ZYialQ49MSWxbJVLjs2d6kPmvQ1xI</password>
                 </configuration>
             </plugin>
         </plugins>
