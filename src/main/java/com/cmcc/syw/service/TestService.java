@@ -5,4 +5,5 @@ package com.cmcc.syw.service;
  */
 public interface TestService {
     void service();
+
 }
