@@ -1,15 +1,19 @@
 package com.cmcc.syw.controller;
 
+import org.apache.commons.codec.Charsets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.StreamUtils;
 
+import static junit.framework.Assert.assertNotNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -20,12 +24,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Created by sunyiwei on 2016/10/19.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:conf/applicationContext.xml")
+@RunWith(MockitoJUnitRunner.class)
 public class JQueryControllerTest {
     MockMvc mockMvc = null;
+
     @InjectMocks
-    private JQueryController jQueryController;
+    private JQueryController jQueryController = new JQueryController();
 
     @Before
     public void setUp() throws Exception {
@@ -48,5 +52,21 @@ public class JQueryControllerTest {
         mockMvc.perform(post("/jquery/test"))
             .andDo(print())
             .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testTest4() throws Exception {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        request.setMethod("get");
+        request.setRequestURI("/jquery/test4");
+
+        MockHttpServletResponse response = new MockHttpServletResponse();
+
+        jQueryController.test4(request, response);
+
+        String output = "";
+        StreamUtils.copy(output, Charsets.UTF_8, response.getOutputStream());
+
+        assertNotNull(output);
     }
 }
