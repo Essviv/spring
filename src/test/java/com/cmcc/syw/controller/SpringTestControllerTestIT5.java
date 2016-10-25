@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @ContextConfiguration(locations = {"classpath:conf/applicationContext.xml",
     "file:src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml"})
-public class SpringTestControllerTestIT4 {
+public class SpringTestControllerTestIT5 {
     @Autowired
     SpringTestController springTestController;
 
