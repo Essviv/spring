@@ -11,7 +11,20 @@ import java.util.TreeSet;
 public class Tester {
     public static void main(String[] args) {
 //        test2();
-        test3();
+//        test3();
+        test();
+    }
+
+    public static void test() {
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Hello");
+            }
+        });
+
+        t.start();
+        t.start();
     }
 
     public static int sum(List<Integer> list) {
