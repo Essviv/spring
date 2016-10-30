@@ -30,7 +30,7 @@ class Sente implements Go {
 class Goban extends Sente {
     @Override
     public void go() {
-        System.out.println("go in Goban.");
+        System.out.println("Go in Goban.");
     }
 }
 
