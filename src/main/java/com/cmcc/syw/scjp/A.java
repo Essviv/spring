@@ -1,13 +1,33 @@
 package com.cmcc.syw.scjp;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 /**
  * Created by sunyiwei on 2016/10/25.
  */
-public class A {
-    public void test() throws Exception{
+@XStreamAlias("A")
+public class A extends SuperA {
+    @XStreamAlias("order")
+    private String order;
+
+    @XStreamAlias("a")
+    private String a;
+
+
+
+    public String getOrder() {
+        return order;
     }
 
-    public void testB(){
+    public void setOrder(String order) {
+        this.order = order;
+    }
 
+    public String getA() {
+        return a;
+    }
+
+    public void setA(String a) {
+        this.a = a;
     }
 }
