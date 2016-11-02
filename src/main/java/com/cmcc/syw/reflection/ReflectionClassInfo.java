@@ -26,6 +26,9 @@ public class ReflectionClassInfo {
 
         //打印属性信息
         printFields(clazz, new ReflectionClass("Hello_world", 27));
+	
+        //获取参数的类信息
+        retriveType();
 
         //包信息
         Package packageInfo = clazz.getPackage();
@@ -67,6 +70,18 @@ public class ReflectionClassInfo {
         //属性信息
         for (Field field : clazz.getFields()) {
             System.out.println(parseProp(field));
+        }
+    }
+
+    private static void retriveType() {
+        try {
+            Class<?> clazz = ReflectionClass.class;
+
+            Method method = clazz.getMethod("getIntProp");
+            ReflectionClass rc = new ReflectionClass("hello", 32);
+            System.out.println(method.getName() + ":" + method.invoke(rc));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
