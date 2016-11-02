@@ -13,6 +13,10 @@ import java.lang.reflect.Method;
  */
 public class PrintClassMethods {
     public static void main(String[] args) throws InvocationTargetException, IllegalAccessException {
+        System.out.println(int.class.isPrimitive());
+        System.out.println(int.class.isInterface());
+        System.out.println(int.class.isArray());
+
         User user = new User();
         Method[] methods = User.class.getMethods();
         for (Method method : methods) {

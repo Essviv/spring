@@ -20,6 +20,13 @@ public class ReflectionClassInfo {
     public static void main(String[] args) throws IllegalAccessException, InvocationTargetException, InstantiationException, NoSuchMethodException {
         Class<ReflectionClass> clazz = ReflectionClass.class;
 
+        //isInstance
+        System.out.println(clazz.isInstance(Object.class));
+        System.out.println(clazz.isInstance(new ReflectionClass("", 3)));
+
+        //打印属性信息
+        printFields(clazz, new ReflectionClass("Hello_world", 27));
+
         //包信息
         Package packageInfo = clazz.getPackage();
         System.out.println(packageInfo);
@@ -74,6 +81,22 @@ public class ReflectionClassInfo {
         String interfaceInfo = concat(interfaces);
 
         return modifierInfo + " " + name + (StringUtils.isBlank(superClazzName) ? "" : superClazzName) + interfaceInfo;
+    }
+
+    private static void printFields(Class clazz, Object obj) throws IllegalAccessException {
+        if (clazz == null) {
+            return;
+        }
+
+        String clazzName = clazz.getSimpleName();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            field.setAccessible(true);
+            System.out.format("%s.%s: %s.%n", clazzName, field.getName(), field.get(obj));
+        }
+
+        //print fields info recursively
+        printFields(clazz.getSuperclass(), obj);
     }
 
     private static String concat(Class[] interfaces) {
