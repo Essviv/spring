@@ -7,6 +7,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Formatter;
 
 import static com.cmcc.syw.reflection.ReflectionUtils.parseConstruct;
 import static com.cmcc.syw.reflection.ReflectionUtils.parseExecutable;
@@ -29,6 +30,18 @@ public class ReflectionClassInfo {
 	
         //获取参数的类信息
         retriveType();
+
+        //动态调用
+        dynamicInvoke();
+
+        //层级关系
+        hierarchy();
+
+        System.out.println("SuperClass of Object.class:" + Object.class.getSuperclass());
+
+        Method supportedMethod = getSupportedMethod(ReflectionClass.class, "hashCode", null);
+        System.out.println("SupportedMethod: " + supportedMethod.getName());
+        System.out.println("DeclaringClass: " + supportedMethod.getDeclaringClass().getSimpleName());
 
         //包信息
         Package packageInfo = clazz.getPackage();
@@ -73,6 +86,41 @@ public class ReflectionClassInfo {
         }
     }
 
+    private static String serialize(Object obj, StringBuilder sb) {
+        Class clazz = obj.getClass();
+
+        sb.append("{");
+
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            try {
+                Object fieldValue = field.get(obj);
+
+                if (field.getType().isArray()) {
+
+                } else if (field.getType().isPrimitive()) {
+                    Formatter formatter = new Formatter(sb);
+                    formatter.format("\"%s\":\"%s\",", field.getName(), field.get(obj));
+                }
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+
+        sb.append("}");
+        return sb.toString();
+    }
+
+    private static void hierarchy() {
+        Class<?> clazz = ReflectionClass.class;
+        ReflectionClass rc = new ReflectionClass("world", 23);
+
+        System.out.println("isInstance of rc: " + clazz.isInstance(rc));
+        System.out.println("isInstance of obj: " + clazz.isInstance(new Object()));
+        System.out.println("ReflectionClass.class isAssignableFrom Object.class: " + clazz.isAssignableFrom(Object.class));
+        System.out.println("Object.class isAssignableFrom ReflectionClass.class: " + Object.class.isAssignableFrom(clazz));
+    }
+
     private static void retriveType() {
         try {
             Class<?> clazz = ReflectionClass.class;
@@ -82,6 +130,38 @@ public class ReflectionClassInfo {
             System.out.println(method.getName() + ":" + method.invoke(rc));
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void dynamicInvoke() {
+        try {
+            Class<?> clazz = ReflectionClass.class;
+
+            ReflectionClass rc = new ReflectionClass("hello", 32);
+
+            int value = 500;
+            Method method = clazz.getMethod("setIntProp", int.class);
+            method.invoke(rc, value);
+
+            method = clazz.getMethod("getIntProp");
+            value = (int) method.invoke(rc);
+            System.out.println(method.getName() + ":" + value);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Method getSupportedMethod(Class<?> clazz, String name, Class<?>[] types) throws NoSuchMethodException {
+        if (clazz == null) {
+            throw new NoSuchMethodException();
+        }
+
+        try {
+            return clazz.getDeclaredMethod(name, types);
+        } catch (NoSuchMethodException e) {
+            return getSupportedMethod(clazz.getSuperclass(), name, types);
         }
     }
 
