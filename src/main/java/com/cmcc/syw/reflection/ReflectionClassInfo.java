@@ -3,12 +3,14 @@ package com.cmcc.syw.reflection;
 import org.apache.commons.lang.StringUtils;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Formatter;
 
+import static com.cmcc.syw.reflection.ReflectionUtils.getSeriableFields;
 import static com.cmcc.syw.reflection.ReflectionUtils.parseConstruct;
 import static com.cmcc.syw.reflection.ReflectionUtils.parseExecutable;
 import static com.cmcc.syw.reflection.ReflectionUtils.parseModifiers;
@@ -23,11 +25,14 @@ public class ReflectionClassInfo {
 
         //isInstance
         System.out.println(clazz.isInstance(Object.class));
-        System.out.println(clazz.isInstance(new ReflectionClass("", 3)));
+        System.out.println(clazz.isInstance(new ReflectionClass("", 3, null)));
 
         //打印属性信息
-        printFields(clazz, new ReflectionClass("Hello_world", 27));
-	
+        printFields(clazz, new ReflectionClass("Hello_world", 27, null));
+
+        //打印数组信息
+        printArrayInfo(clazz, new ReflectionClass("fd", 4334, new int[]{343, 43, 43, 43, 4343, 43}));
+
         //获取参数的类信息
         retriveType();
 
@@ -86,6 +91,29 @@ public class ReflectionClassInfo {
         }
     }
 
+    private static void printArrayInfo(Class clazz, Object obj) {
+        Field[] fields = getSeriableFields(clazz);
+        for (Field field : fields) {
+            if (field.getClass().isArray()) {
+                try {
+                    iterArrasy(field, obj);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private static void iterArrasy(Field field, Object obj) throws IllegalAccessException {
+        Object value = field.get(obj);
+
+        int length = Array.getLength(value);
+
+        for (int i = 0; i < length; i++) {
+            System.out.println(Array.get(obj, i));
+        }
+    }
+
     private static String serialize(Object obj, StringBuilder sb) {
         Class clazz = obj.getClass();
 
@@ -113,7 +141,7 @@ public class ReflectionClassInfo {
 
     private static void hierarchy() {
         Class<?> clazz = ReflectionClass.class;
-        ReflectionClass rc = new ReflectionClass("world", 23);
+        ReflectionClass rc = new ReflectionClass("world", 23, null);
 
         System.out.println("isInstance of rc: " + clazz.isInstance(rc));
         System.out.println("isInstance of obj: " + clazz.isInstance(new Object()));
@@ -126,7 +154,7 @@ public class ReflectionClassInfo {
             Class<?> clazz = ReflectionClass.class;
 
             Method method = clazz.getMethod("getIntProp");
-            ReflectionClass rc = new ReflectionClass("hello", 32);
+            ReflectionClass rc = new ReflectionClass("hello", 32, null);
             System.out.println(method.getName() + ":" + method.invoke(rc));
         } catch (Exception e) {
             e.printStackTrace();
@@ -137,7 +165,7 @@ public class ReflectionClassInfo {
         try {
             Class<?> clazz = ReflectionClass.class;
 
-            ReflectionClass rc = new ReflectionClass("hello", 32);
+            ReflectionClass rc = new ReflectionClass("hello", 32, null);
 
             int value = 500;
             Method method = clazz.getMethod("setIntProp", int.class);

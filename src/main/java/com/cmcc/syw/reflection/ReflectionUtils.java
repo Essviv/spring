@@ -6,6 +6,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Parameter;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * 反射工具类
@@ -13,6 +15,23 @@ import java.lang.reflect.Parameter;
  * Created by sunyiwei on 2016/10/30.
  */
 public class ReflectionUtils {
+    public static Field[] getSeriableFields(Class<?> clazz) {
+        List<Field> fields = new LinkedList<>();
+        while (clazz != null) {
+            Field[] fields1 = clazz.getDeclaredFields();
+            for (Field field : fields1) {
+                if (!Modifier.isStatic(field.getModifiers())) { //过滤掉类成员变量
+                    fields.add(field);
+                }
+            }
+
+            clazz = clazz.getSuperclass();
+        }
+
+        Field[] result = new Field[fields.size()];
+        return (Field[]) fields.toArray(result);
+    }
+
     //解析方法信息
     public static String parseExecutable(Executable executable) {
         String modifiers = parseModifiers(executable.getModifiers());
@@ -61,27 +80,28 @@ public class ReflectionUtils {
     }
 
     public static String parseModifiers(int modifiers) {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (Modifier.isFinal(modifiers)) {
-            stringBuilder.append("final ");
-        }
-
-        if (Modifier.isPublic(modifiers)) {
-            stringBuilder.append("public ");
-        }
-
-        if (Modifier.isPrivate(modifiers)) {
-            stringBuilder.append("private ");
-        }
-
-        if (Modifier.isProtected(modifiers)) {
-            stringBuilder.append("protected ");
-        }
-
-        if (Modifier.isStatic(modifiers)) {
-            stringBuilder.append("static ");
-        }
-
-        return stringBuilder.toString();
+        return Modifier.toString(modifiers);
+//        StringBuilder stringBuilder = new StringBuilder();
+//        if (Modifier.isFinal(modifiers)) {
+//            stringBuilder.append("final ");
+//        }
+//
+//        if (Modifier.isPublic(modifiers)) {
+//            stringBuilder.append("public ");
+//        }
+//
+//        if (Modifier.isPrivate(modifiers)) {
+//            stringBuilder.append("private ");
+//        }
+//
+//        if (Modifier.isProtected(modifiers)) {
+//            stringBuilder.append("protected ");
+//        }
+//
+//        if (Modifier.isStatic(modifiers)) {
+//            stringBuilder.append("static ");
+//        }
+//
+//        return stringBuilder.toString();
     }
 }

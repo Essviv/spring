@@ -12,13 +12,23 @@ import java.util.Random;
 final public class ReflectionClass implements Comparable {
     private String stringProp;
     private int intProp;
+    private int[] intArray;
 
-    public ReflectionClass(String stringProp, int intProp) {
+    public ReflectionClass(String stringProp, int intProp, int[] intArray) {
         this.stringProp = stringProp;
         this.intProp = intProp;
+        this.intArray = intArray;
     }
 
     private ReflectionClass() {
+    }
+
+    public int[] getIntArray() {
+        return intArray;
+    }
+
+    public void setIntArray(int[] intArray) {
+        this.intArray = intArray;
     }
 
     @Override
