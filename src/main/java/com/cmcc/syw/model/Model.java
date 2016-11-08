@@ -1,5 +1,8 @@
 package com.cmcc.syw.model;
 
+import com.cmcc.syw.annotations.LogicalDeleteFlag;
+import com.cmcc.syw.annotations.Primary;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -7,9 +10,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "Model")
 public class Model {
+    @Primary
     private String name;
     private int age;
     private String gender;
+
+    @LogicalDeleteFlag
+    private boolean deleteFlag;
 
     public String getName() {
         return name;
@@ -33,5 +40,13 @@ public class Model {
 
     public void setGender(String gender) {
         this.gender = gender;
+    }
+
+    public boolean isDeleteFlag() {
+        return deleteFlag;
+    }
+
+    public void setDeleteFlag(boolean deleteFlag) {
+        this.deleteFlag = deleteFlag;
     }
 }
