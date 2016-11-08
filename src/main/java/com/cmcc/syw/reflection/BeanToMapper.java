@@ -61,12 +61,39 @@ public class BeanToMapper {
         create.addAttribute("useGeneratedKeysr", "true");
         create.addAttribute("keyProperty", "");
 
-        String insertText = buildInsertStatement();
+        String insertText = buildInsertStatement(clazz);
         create.addText(insertText);
     }
 
-    private String buildInsertStatement() {
-        return "";
+    private String buildInsertStatement(Class clazz) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("insert into ").append(clazz.getSimpleName())
+                .append("(");
+        Field[] fs = clazz.getDeclaredFields();
+        int length = fs.length;
+        for (int i = 0; i < length; i++) {
+            if (i != 0) {
+                sb.append(",");
+            }
+            sb.append(fs[i].getName());
+        }
+        sb.append(")values(");
+
+        for (int i = 0; i < length; i++) {
+            if (i != 0) {
+                sb.append(",");
+            }
+
+            sb.append("#{")
+                    .append(fs[i].getName())
+                    .append(", jdbcType=")
+                    .append(convert(fs[i].getType()))
+                    .append("}");
+        }
+
+        sb.append(")");
+        return sb.toString();
     }
 
     private Element appendRoot(Document document, Class clazz) {
