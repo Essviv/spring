@@ -1,17 +1,17 @@
 package com.cmcc.syw.reflection;
 
 import com.cmcc.syw.model.Model;
-
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.dom.DOMDocumentType;
+import org.dom4j.dom.DOMElement;
 
 import java.lang.reflect.Field;
 
 /**
  * 根据bean类型自动生成mapper文件
- *
+ * <p/>
  * Created by sunyiwei on 2016/11/7.
  */
 public class BeanToMapper {
@@ -47,7 +47,25 @@ public class BeanToMapper {
     }
 
     private void appendGet(Class clazz, Element root) {
+        Element get = root.addElement("select");
+        get.addAttribute("id", "get");
+        get.addAttribute("resultMap", "BaseResultMap");
 
+        String getText = buildGetStatement(clazz);
+        get.addText(getText);
+    }
+
+    private String buildGetStatement(Class clazz) {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        Element element = new DOMElement("include");
+        element.addAttribute("refid", "Base_Column_List");
+
+        stringBuilder.append("select ").append(element.asXML())
+            .append(" from ").append(clazz.getSimpleName()).append(" where ")
+            .append(" id  = ").append("#{id, jdbcType = }");
+
+        return stringBuilder.toString();
     }
 
     private void appendDelete(Class clazz, Element root) {
@@ -69,7 +87,7 @@ public class BeanToMapper {
         StringBuilder sb = new StringBuilder();
 
         sb.append("insert into ").append(clazz.getSimpleName())
-                .append("(");
+            .append("(");
         Field[] fs = clazz.getDeclaredFields();
         int length = fs.length;
         for (int i = 0; i < length; i++) {
@@ -86,10 +104,10 @@ public class BeanToMapper {
             }
 
             sb.append("#{")
-                    .append(fs[i].getName())
-                    .append(", jdbcType=")
-                    .append(convert(fs[i].getType()))
-                    .append("}");
+                .append(fs[i].getName())
+                .append(", jdbcType=")
+                .append(convert(fs[i].getType()))
+                .append("}");
         }
 
         sb.append(")");
