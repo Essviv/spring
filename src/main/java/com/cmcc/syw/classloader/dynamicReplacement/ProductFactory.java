@@ -47,7 +47,7 @@ public class ProductFactory {
         //这里通过动态代理隔离了真实的Product实现与客户端, 使得动态替换变得可能.
         Product product = (Product) Proxy.newProxyInstance(ProductFactory.class.getClassLoader(),
                 itfs, new ProductInvacationHandler(implClass.newInstance()));
-       
+
         instances.add(new WeakReference<>(product));
 
         return product;
