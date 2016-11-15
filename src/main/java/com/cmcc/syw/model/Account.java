@@ -1,6 +1,9 @@
 package com.cmcc.syw.model;
 
+import com.cmcc.syw.annotations.Primary;
+
 public class Account {
+    @Primary
     private Long id;
 
     private Integer count;
