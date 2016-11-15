@@ -14,6 +14,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,27 +27,35 @@ public class HelloWorld {
     @SuppressWarnings("unchecked")
     public static void main(String[] args) throws IOException, TemplateException, InterruptedException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, URISyntaxException {
         final String className = "com.cmcc.syw.HelloWorldDynamic";
+        final String dir = "/dynamic/classes/";
+
         String content = buildTemplate(className);
-        write(content, className);
+        write(content, dir, className);
 
         //编译
-        compile(content, className);
+        compile(dir, className);
 
         //加载
-        Class clazz = Class.forName(className);
+        List<String> dirs = new LinkedList<>();
+        dirs.add(dir);
+        Class clazz = Class.forName(className, true, new CustomClassLoader(dirs));
 
         //执行
-        Method mainMethod = clazz.getMethod("main", String.class);
-        mainMethod.invoke(null, new String[]{});
+        Method mainMethod = clazz.getMethod("main", String[].class);
+        mainMethod.invoke(null, (Object) args);
     }
 
-    private static void write(String content, String className) throws IOException {
-        final String filename = className.replace(".", "/") + ".java";
-        FileUtils.writeStringToFile(new File(filename), content, "utf-8");
+    private static void write(String content, String dir, String className) throws IOException, URISyntaxException {
+        final String filename = dir + className.replace(".", "/") + ".java";
+        File file = new File(filename);
+
+        FileUtils.writeStringToFile(file, content, "utf-8");
     }
 
-    private static boolean compile(String content, String outputName) throws IOException, InterruptedException {
-        Process process = Runtime.getRuntime().exec("javac " + outputName + ".java");
+    private static boolean compile(String dir, String outputName) throws IOException, InterruptedException {
+        String subPath = outputName.substring(0, outputName.lastIndexOf("."));
+        String fileName = outputName.substring(outputName.lastIndexOf(".") + 1);
+        Process process = Runtime.getRuntime().exec("javac " + dir + subPath.replace(".", "/") + "/" + fileName + ".java");
         process.waitFor();
 
         if (process.exitValue() != 0) { //编译失败
@@ -68,5 +78,34 @@ public class HelloWorld {
         template.process(map, writer);
 
         return writer.toString();
+    }
+
+    private static class CustomClassLoader extends ClassLoader {
+        private List<String> dirs = new LinkedList<>();
+
+        public CustomClassLoader(List<String> dirs) {
+            this.dirs = dirs;
+        }
+
+        @Override
+        protected Class<?> findClass(String name) throws ClassNotFoundException {
+            for (String dir : dirs) {
+                String filename = dir + name.replace(".", "/") + ".class";
+                try {
+                    File file = new File(filename);
+
+                    byte[] bytes = FileUtils.readFileToByteArray(file);
+                    return defineClass(name, bytes, 0, bytes.length);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return null;
+        }
+
+        public void addDir(String dir) {
+            dirs.add(dir);
+        }
     }
 }
