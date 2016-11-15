@@ -1,11 +1,9 @@
 package com.cmcc.syw.c2c;
 
 import com.google.common.base.Charsets;
-
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-
 import org.apache.commons.io.FileUtils;
 import org.springframework.util.StreamUtils;
 
@@ -20,13 +18,13 @@ import java.util.Map;
 
 /**
  * 动态构造java文件,然后编译,加载,再执行
- *
+ * <p>
  * Created by sunyiwei on 2016/11/14.
  */
 public class HelloWorld {
     @SuppressWarnings("unchecked")
     public static void main(String[] args) throws IOException, TemplateException, InterruptedException, ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, URISyntaxException {
-        final String className = "HelloWorldDynamic";
+        final String className = "com.cmcc.syw.HelloWorldDynamic";
         String content = buildTemplate(className);
         write(content, className);
 
@@ -42,7 +40,7 @@ public class HelloWorld {
     }
 
     private static void write(String content, String className) throws IOException {
-        final String filename = HelloWorld.class.getPackage().getName().replace(".", "/") +  className + ".java";
+        final String filename = className.replace(".", "/") + ".java";
         FileUtils.writeStringToFile(new File(filename), content, "utf-8");
     }
 
