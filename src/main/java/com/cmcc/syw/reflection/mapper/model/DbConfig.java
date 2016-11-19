@@ -8,6 +8,7 @@ package com.cmcc.syw.reflection.mapper.model;
 public class DbConfig {
     private String host;
     private int port;
+    private String dbName;
     private String username;
     private String password;
 
@@ -41,5 +42,13 @@ public class DbConfig {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getDbName() {
+        return dbName;
+    }
+
+    public void setDbName(String dbName) {
+        this.dbName = dbName;
     }
 }

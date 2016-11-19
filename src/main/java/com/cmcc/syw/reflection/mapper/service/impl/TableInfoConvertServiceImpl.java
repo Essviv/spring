@@ -2,8 +2,8 @@ package com.cmcc.syw.reflection.mapper.service.impl;
 
 import com.cmcc.syw.reflection.mapper.model.MapperConfig;
 import com.cmcc.syw.reflection.mapper.model.MapperInfo;
-import com.cmcc.syw.reflection.mapper.service.NameConvertService;
 import com.cmcc.syw.reflection.mapper.model.TableInfo;
+import com.cmcc.syw.reflection.mapper.service.NameConvertService;
 import com.cmcc.syw.reflection.mapper.service.TableInfoConvertService;
 
 /**

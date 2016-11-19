@@ -16,7 +16,7 @@ public class ColumnInfo {
     private String type;
 
     //是否为主键
-    private boolean isPrimary;
+    private boolean primary;
 
 
     public String getColName() {
@@ -36,11 +36,11 @@ public class ColumnInfo {
     }
 
     public boolean isPrimary() {
-        return isPrimary;
+        return primary;
     }
 
     public void setPrimary(boolean primary) {
-        isPrimary = primary;
+        this.primary = primary;
     }
 
     public String getType() {

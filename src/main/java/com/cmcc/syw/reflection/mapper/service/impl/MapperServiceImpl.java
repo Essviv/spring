@@ -2,7 +2,6 @@ package com.cmcc.syw.reflection.mapper.service.impl;
 
 import com.google.gson.Gson;
 
-import com.cmcc.syw.reflection.mapper.model.DbConfig;
 import com.cmcc.syw.reflection.mapper.model.MapperConfig;
 import com.cmcc.syw.reflection.mapper.model.MapperInfo;
 import com.cmcc.syw.reflection.mapper.model.TableInfo;
@@ -14,9 +13,11 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.LinkedHashMap;
@@ -47,13 +48,13 @@ public class MapperServiceImpl implements MapperService {
     }
 
     @Override
-    public boolean process(DbConfig dbConfig, MapperConfig mapperConfig, String tableName) {
+    public boolean process(MapperConfig mapperConfig, String tableName) {
         Gson gson = new Gson();
 
         //1. 根据数据库配置信息及表名信息获取到表相应的字段信息
-        TableInfo tableInfo = dbService.parse(dbConfig, tableName);
+        TableInfo tableInfo = dbService.parse(tableName);
         if (tableInfo == null || tableInfo.getCols() == null || tableInfo.getCols().isEmpty()) {
-            LOGGER.error("无法根据数据库的配置信息及表名信息获取到相应的字段信息. DbConfig = {}, TableName = {}.", gson.toJson(dbConfig), gson.toJson(tableName));
+            LOGGER.error("无法根据数据库的配置信息及表名信息获取到相应的字段信息. TableName = {}.", gson.toJson(tableName));
             return false;
         }
 
@@ -65,21 +66,30 @@ public class MapperServiceImpl implements MapperService {
         }
 
         //3. 根据映射信息生成相应的文件
-        return generateCode(mapperInfo);
+        return generateCode(MAPPER_XML_FILE_NAME, mapperInfo, mapperConfig);
     }
 
     /**
      * 根据映射配置信息和配置信息输出相应的代码文件
      *
-     * @param mapperInfo 映射信息
+     * @param mapperInfo   映射信息
+     * @param mapperConfig 映射配置
      * @return 成功生成文件则返回true, 否则false
      */
-    private boolean generateCode(MapperInfo mapperInfo) {
+    private boolean generateCode(String filename, MapperInfo mapperInfo, MapperConfig mapperConfig) {
         //初始化FTL的配置
         Configuration cfg = initCfg();
+        String baseDir = mapperConfig.getBaseDir();
 
-        System.out.println(resolve(cfg, mapperInfo, MAPPER_XML_FILE_NAME));
-        return true;
+        String content = resolve(cfg, mapperInfo, MAPPER_XML_FILE_NAME);
+        try {
+            FileUtils.writeStringToFile(new File(baseDir, filename), content, "utf-8");
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     private Configuration initCfg() {

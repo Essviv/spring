@@ -1,6 +1,5 @@
 package com.cmcc.syw.reflection.mapper.service;
 
-import com.cmcc.syw.reflection.mapper.model.DbConfig;
 import com.cmcc.syw.reflection.mapper.model.MapperConfig;
 
 /**
@@ -12,9 +11,8 @@ public interface MapperService {
     /**
      * 根据提供的数据库配置信息,映射配置信息以及表名生成相应的mapper
      *
-     * @param dbConfig     数据库配置信息
      * @param mapperConfig 映射配置信息
      * @param tableName    表名信息
      */
-    boolean process(DbConfig dbConfig, MapperConfig mapperConfig, String tableName);
+    boolean process(MapperConfig mapperConfig, String tableName);
 }

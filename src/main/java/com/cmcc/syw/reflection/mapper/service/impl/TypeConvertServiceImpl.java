@@ -2,6 +2,8 @@ package com.cmcc.syw.reflection.mapper.service.impl;
 
 import com.cmcc.syw.reflection.mapper.service.TypeConvertService;
 
+import java.util.Date;
+
 /**
  * 将数据库类型转化成JAVA类型
  *
@@ -10,8 +12,18 @@ import com.cmcc.syw.reflection.mapper.service.TypeConvertService;
 public class TypeConvertServiceImpl implements TypeConvertService {
     @Override
     public Class convert(String dbType) {
-        if("VARCHAR".equals(dbType)){
+        if (dbType.contains("VARCHAR")) {
             return String.class;
+        } else if (dbType.contains("bigint")) {
+            return long.class;
+        } else if (dbType.contains("int")) {
+            return long.class;
+        } else if (dbType.contains("double")) {
+            return double.class;
+        } else if (dbType.contains("float")) {
+            return float.class;
+        } else if (dbType.contains("datetime")) {
+            return Date.class;
         }
 
         return null;
@@ -19,6 +31,6 @@ public class TypeConvertServiceImpl implements TypeConvertService {
 
     @Override
     public String convertAsString(String dbType) {
-        return null;
+        return convert(dbType).getName();
     }
 }

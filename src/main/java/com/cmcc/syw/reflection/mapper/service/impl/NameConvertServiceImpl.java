@@ -14,8 +14,10 @@ public class NameConvertServiceImpl implements NameConvertService {
     public String convert(String name) {
         String[] comps = name.split("_");
         StringBuilder stringBuilder = new StringBuilder();
-        for (String comp : comps) {
-            stringBuilder.append(StringUtils.capitalize(comp));
+
+        int length = comps.length;
+        for (int i = 0; i < length; i++) {
+            stringBuilder.append(i == 0 ? comps[i] : StringUtils.capitalize(comps[i]));
         }
 
         return stringBuilder.toString();
