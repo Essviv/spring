@@ -1,4 +1,4 @@
-package com.cmcc.syw.concurrency;
+package com.cmcc.syw.concurrency.lock;
 
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
