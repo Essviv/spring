@@ -1,4 +1,7 @@
-package com.cmcc.syw.concurrency.lock;
+package com.cmcc.syw.concurrency.lock.spinlock;
+
+import com.cmcc.syw.concurrency.lock.CustomThread;
+import com.cmcc.syw.concurrency.lock.Operator;
 
 import java.util.concurrent.atomic.AtomicReference;
 
