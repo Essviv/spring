@@ -16,7 +16,7 @@ public class SpinLock implements Operator {
     public static void main(String[] args) {
         SpinLock spinLock = new SpinLock();
 
-        final int COUNT = 100;
+        final int COUNT = 200;
         for (int i = 0; i < COUNT; i++) {
             new CustomThread(spinLock).start();
         }

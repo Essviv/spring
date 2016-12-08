@@ -18,7 +18,7 @@ public class TicketLock implements Operator {
     public static void main(String[] args) {
         TicketLock ticketLock = new TicketLock();
 
-        final int COUNT = 100;
+        final int COUNT = 200;
         for (int i = 0; i < COUNT; i++) {
             new CustomThread(ticketLock).start();
         }

@@ -23,7 +23,7 @@ public class ClhLock implements Operator {
     public static void main(String[] args) {
         ClhLock clhLock = new ClhLock();
 
-        final int COUNT = 10;
+        final int COUNT = 200;
         for (int i = 0; i < COUNT; i++) {
             new CustomThread(clhLock).start();
         }
