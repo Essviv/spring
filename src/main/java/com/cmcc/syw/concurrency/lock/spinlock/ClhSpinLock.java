@@ -3,14 +3,15 @@ package com.cmcc.syw.concurrency.lock.spinlock;
 import com.cmcc.syw.concurrency.lock.CustomThread;
 import com.cmcc.syw.concurrency.lock.Operator;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * clh锁实践代码
+ * clh锁实践代码：当获取锁失败时，使用自旋方式等待
  * <p>
  * Created by sunyiwei on 2016/12/7.
  */
-public class ClhLock implements Operator {
+public class ClhSpinLock implements Operator {
     //前驱节点
     private ThreadLocal<Node> prev = new ThreadLocal<>();
 
@@ -21,9 +22,9 @@ public class ClhLock implements Operator {
     private AtomicReference<Node> tail = new AtomicReference<>();
 
     public static void main(String[] args) {
-        ClhLock clhLock = new ClhLock();
+        ClhSpinLock clhLock = new ClhSpinLock();
 
-        final int COUNT = 200;
+        final int COUNT = 50;
         for (int i = 0; i < COUNT; i++) {
             new CustomThread(clhLock).start();
         }
@@ -38,7 +39,7 @@ public class ClhLock implements Operator {
         Node prevNode = tail.getAndSet(currentNode);
         prev.set(prevNode);
 
-        //等待获取锁
+        //等待获取锁， 如果失败，则自旋等待
         while (prevNode != null && prevNode.isLocked()) {
         }
 
