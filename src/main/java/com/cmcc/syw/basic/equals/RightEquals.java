@@ -1,4 +1,4 @@
-package com.cmcc.syw.basic;
+package com.cmcc.syw.basic.equals;
 
 import java.util.HashMap;
 import java.util.Map;
