@@ -1,11 +1,8 @@
 package com.cmcc.syw.md;
 
-import org.apache.commons.io.FileSystemUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.StringUtils;
-import org.joda.time.DateTime;
-import org.springframework.util.FileCopyUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +22,7 @@ import java.util.Date;
  */
 public class Processor {
     public static void main(String[] args) throws IOException {
-        final String INPUT_DIR = "D:\\workspace\\blogs";
+        final String INPUT_DIR = "D:\\workspace\\blogs\\source\\_posts";
         final String OUTPUT_DIR = "C:\\Users\\patrick\\Desktop";
 
         Path startPath = Paths.get(OUTPUT_DIR);
@@ -47,7 +44,7 @@ public class Processor {
                 String newContent = prepend + oldContent;
 
                 FileUtils.writeStringToFile(oldFile, newContent, "utf-8");
-                oldFile.renameTo(new File(newName(oldFile)));
+                //oldFile.renameTo(new File(newName(oldFile)));
 
                 return FileVisitResult.CONTINUE;
             }

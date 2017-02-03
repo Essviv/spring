@@ -1,4 +1,4 @@
-package com.cmcc.syw.classloader;
+package com.cmcc.syw.jvm.classloader;
 
 import com.cmcc.syw.reflection.BeanToMapper;
 
@@ -39,9 +39,9 @@ public class ClassLoaderTest {
             }
         };
 
-        Object obj = cl.loadClass("com.cmcc.syw.classloader.ClassLoaderTest").newInstance();
+        Object obj = cl.loadClass("com.cmcc.syw.jvm.classloader.ClassLoaderTest").newInstance();
         System.out.println(obj.getClass());
-        System.out.println(obj instanceof com.cmcc.syw.classloader.ClassLoaderTest);
+        System.out.println(obj instanceof com.cmcc.syw.jvm.classloader.ClassLoaderTest);
     }
 
     private static void arrayTest() throws ClassNotFoundException {

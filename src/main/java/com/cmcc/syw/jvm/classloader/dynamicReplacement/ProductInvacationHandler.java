@@ -1,4 +1,4 @@
-package com.cmcc.syw.classloader.dynamicReplacement;
+package com.cmcc.syw.jvm.classloader.dynamicReplacement;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

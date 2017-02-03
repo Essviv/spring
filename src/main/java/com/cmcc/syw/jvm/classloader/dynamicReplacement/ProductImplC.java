@@ -1,4 +1,4 @@
-package com.cmcc.syw.classloader.dynamicReplacement;
+package com.cmcc.syw.jvm.classloader.dynamicReplacement;
 
 /**
  * ProductImplC

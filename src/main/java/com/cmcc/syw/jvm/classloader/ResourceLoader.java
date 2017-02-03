@@ -1,4 +1,4 @@
-package com.cmcc.syw.classloader;
+package com.cmcc.syw.jvm.classloader;
 
 import org.apache.commons.codec.Charsets;
 import org.springframework.util.StreamUtils;

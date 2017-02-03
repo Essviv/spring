@@ -1,4 +1,4 @@
-package com.cmcc.syw.classloader;
+package com.cmcc.syw.jvm.classloader;
 
 /**
  * 只能被调用一次构造函数的类
@@ -18,12 +18,12 @@ public class ConstructorOnce {
 
     public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
         SimpleClassLoader scl1 = new SimpleClassLoader("/Users/sunyiwei/Desktop/");
-        Class clazz1 = scl1.loadClass("com.cmcc.syw.classloader.ConstructorOnce");
+        Class clazz1 = scl1.loadClass("com.cmcc.syw.jvm.classloader.ConstructorOnce");
         Object obj1 = clazz1.newInstance();
 
 
         SimpleClassLoader scl2 = new SimpleClassLoader("/Users/sunyiwei/Desktop/");
-        Class clazz2 = scl1.loadClass("com.cmcc.syw.classloader.ConstructorOnce");
+        Class clazz2 = scl1.loadClass("com.cmcc.syw.jvm.classloader.ConstructorOnce");
         Object obj2 = clazz2.newInstance();
     }
 }
