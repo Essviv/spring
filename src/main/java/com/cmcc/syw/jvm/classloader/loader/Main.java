@@ -1,4 +1,4 @@
-package com.cmcc.syw.classloader.loader;
+package com.cmcc.syw.jvm.classloader.loader;
 
 import java.net.MalformedURLException;
 import java.net.URL;
