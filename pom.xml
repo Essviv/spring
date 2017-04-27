@@ -183,6 +183,13 @@
             <version>3.12</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.rabbitmq/amqp-client -->
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+
         <!-- common-io -->
         <dependency>
             <groupId>org.apache.commons</groupId>
