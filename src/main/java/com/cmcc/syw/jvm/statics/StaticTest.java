@@ -18,6 +18,7 @@ public class StaticTest {
         System.out.println("1");
     }
 
+    //构造块,不是静态块!
     {
         System.out.println("2");
     }
